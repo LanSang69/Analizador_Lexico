@@ -2,9 +2,14 @@ import AFN
 import estado
 import transicion
 
-afn = AFN.AFN()
-afn = afn.crearAFNBasicoChar('a')
-afn2 = afn.crearAFNBasicoRange('a','z')
+count = 0
+afn, afn2 = AFN.AFN(), AFN.AFN()
+afn, count = afn.crearAFNBasicoChar('a', count)
+afn2, count = afn2.crearAFNBasicoChar('b', count)
 
-print(afn.alphabet)
-print(afn2.alphabet)
+afn = afn.Unir(afn, afn2)
+
+for a in afn.edosAFN:
+    print('Estado: ', a._idEdo)
+    for t in a.transiciones:
+        print("Transicion desde el estado", a._idEdo, "con el símbolo", t.simboloInf,"-",t.simboloSup, "hacia el estado", t.edoDestino._idEdo)

@@ -1,12 +1,12 @@
 import estado, transicion
-
+eps = 'ε'
 class AFN:
     def __init__(self):
-        self.idAFN = 0
+        self.idAFN = 'a'
         self.edoInicial = estado.Estado()
-        self.edosAFN = [estado.Estado()]
+        self.edosAFN = []
         self.alphabet = []
-        self.edosAcept = [estado.Estado()]
+        self.edosAcept = []
         self.countIdAFN = 0
         self.automatas = []
         self.unido = False
@@ -111,7 +111,8 @@ class AFN:
 
     #metodos para trabajar
     @classmethod
-    def crearAFNBasicoChar(cls, simbolo):
+    def crearAFNBasicoChar(cls, simbolo, count):
+        count += 1
         automata = cls()
         e1, e2 = estado.Estado(), estado.Estado()
 
@@ -120,13 +121,16 @@ class AFN:
         e2.edo_acept = True
 
         automata.edoInicial = e1
+        automata.edoInicial.id_edo = count
+        count += 1
         automata.edosAFN.append(e1)
         automata.edosAFN.append(e2)
         automata.alphabet.append(simbolo)
         automata.edosAcept.append(e2)
+        automata.edosAcept[0].id_edo = count
         automata.unido = False
 
-        return automata
+        return automata, count
     
     @classmethod
     def crearAFNBasicoRange(cls, simbolo1, simbolo2):
@@ -148,3 +152,36 @@ class AFN:
         automata.unido = False
 
         return automata
+    
+    @classmethod
+    def Unir(_,current, afn):
+        e1, e2 = estado.Estado(), estado.Estado()
+        t1 = transicion.Transicion.init_data(eps, eps, current.edoInicial)
+        t2 = transicion.Transicion.init_data(eps, eps, afn.edoInicial)
+
+        e1.transiciones.append(t1)
+        e1.transiciones.append(t2)
+        t1 = transicion.Transicion.init_data(eps, eps, e2)
+
+        for e in current.edosAcept:
+            e.transiciones.append(t1)
+            e.edo_acept = False
+        for e in afn.edosAcept:
+            e.transiciones.append(t1)
+            e.edo_acept = False
+
+        e2.edo_acept = True
+        current.edoInicial = e1
+
+        for e in afn.edosAFN:
+            current.edosAFN.append(e)
+        
+
+        current.edosAFN.append(e1)
+        current.edosAFN.append(e2)
+        current.edosAcept.clear()
+        current.edosAcept.append(e2)
+        for a in afn.alphabet:
+            if a not in current.alphabet:
+                current.alphabet.append(a)
+        return current

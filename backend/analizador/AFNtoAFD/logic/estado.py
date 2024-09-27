@@ -1,7 +1,7 @@
 import transicion
 class Estado:
     def __init__(self):
-        self._idEdo = 0
+        self._idEdo = None
         self._transiciones = []
         self._EdoAcept = False
         self._token = 0
