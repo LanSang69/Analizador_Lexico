@@ -3,7 +3,7 @@ eps = 'ε'
 class AFN:
     def __init__(self):
         self.idAFN = 'a'
-        self.edoInicial = estado.Estado()
+        self.edoInicial = None
         self.edosAFN = []
         self.alphabet = []
         self.edosAcept = []
@@ -111,8 +111,7 @@ class AFN:
 
     #metodos para trabajar
     @classmethod
-    def crearAFNBasicoChar(cls, simbolo, count):
-        count += 1
+    def crearAFNBasicoChar(cls, simbolo):
         automata = cls()
         e1, e2 = estado.Estado(), estado.Estado()
 
@@ -121,16 +120,13 @@ class AFN:
         e2.edo_acept = True
 
         automata.edoInicial = e1
-        automata.edoInicial.id_edo = count
-        count += 1
         automata.edosAFN.append(e1)
         automata.edosAFN.append(e2)
         automata.alphabet.append(simbolo)
         automata.edosAcept.append(e2)
-        automata.edosAcept[0].id_edo = count
         automata.unido = False
 
-        return automata, count
+        return automata
     
     @classmethod
     def crearAFNBasicoRange(cls, simbolo1, simbolo2):
@@ -184,4 +180,45 @@ class AFN:
         for a in afn.alphabet:
             if a not in current.alphabet:
                 current.alphabet.append(a)
+        return current
+
+    @classmethod
+    def Concatenar(_,current, afn):
+        for t in afn.edoInicial.transiciones:
+            for e in current.edosAcept:
+                e.transiciones.append(t)
+                e.edoAcept = False
+
+        for e in afn.edosAFN:
+            if e != afn.edoInicial:
+                current.edosAFN.append(e)
+        current.edosAcept.clear()
+        for e in afn.edosAcept:
+            current.edosAcept.append(e)
+        
+        return current
+
+    @classmethod
+    def CerraduraPositiva(_,current):
+        e1, e2 = estado.Estado(), estado.Estado()
+
+        e1.transiciones.append(transicion.Transicion.init_data(eps, eps, current.edoInicial))
+        for e in current.edosAcept:
+            e.transiciones.append(transicion.Transicion.init_data(eps, eps, e2))
+            e.transiciones.append(transicion.Transicion.init_data(eps, eps, current.edoInicial))
+            e.edoAcept = False
+        
+        current.edosAcept.clear()
+        current.edosAcept.append(e2)
+        e2.edoAcept = True
+        current.edoInicial = e1
+        current.edosAFN.append(e1)
+        current.edosAFN.append(e2)
+        return current
+
+    @classmethod
+    def CerraduraKleene(_,current):
+        current = current.CerraduraPositiva(current)
+        current.edoInicial.transiciones.append(transicion.Transicion.init_data(eps,eps,current.edosAcept[0]))
+
         return current
