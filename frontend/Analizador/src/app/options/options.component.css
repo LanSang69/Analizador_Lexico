@@ -1,0 +1,27 @@
+/* colors */
+:root {
+    --label: #efecece7;
+    --container-font: "Courier Prime", monospace;
+}
+
+.header-erros > .label {
+    font-size: 1em;
+    font-family: var(--container-font);
+    color: var(--label);
+}
+
+.errors-container {
+    margin-left: 15px;
+}
+
+.errors-logo {
+    margin-right: 15px;
+}
+
+.text p {
+    color: var(--label);
+}
+
+hr {
+    color: var(--label);
+}

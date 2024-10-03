@@ -1,0 +1,66 @@
+/* Path: front-end/src/app/main/main.component.css */
+/* Styles for code in java */
+#main, #code {
+    background-color: #212121;
+    color: #efecece7;
+}
+
+.btn-code {
+    width: 100px;
+    min-height: 50px;
+    border-radius: 20px;
+    background-color: #efecece7;
+    color: #000000;
+}
+
+.btn-code:hover {
+    background-color: #78A083;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-control:hover {
+    border-color: #D61C4E;
+    border-width: 1px;
+    transform: scale(1.05);
+}
+
+.align-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.javaCode {
+    background-color: #000000;
+    width: 80%;
+    max-height: 90%;
+    /* overflow: scroll; */
+}
+
+code {
+    font-size: 1em;
+}
+
+.bg-gray {
+    background-color: #424242;
+    height: 30px;
+}
+
+.code-text {
+    color: #efecece7;
+    border-radius: 15px;
+}
+
+.code-container {
+    margin-left: 15px;
+}
+
+.coding {
+    font-family: "Courier Prime", monospace;
+    font-size: 12px;
+}
+
+.options-section {
+    background-color: #171717ff;
+}
