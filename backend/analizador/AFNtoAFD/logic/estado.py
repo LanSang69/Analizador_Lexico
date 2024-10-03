@@ -1,74 +1,66 @@
 import transicion
 class Estado:
     def __init__(self):
-        self._idEdo = None
-        self._transiciones = []
-        self._EdoAcept = False
-        self._token = 0
-        self._countEdos = 0
+        self.idEdo = None
+        self.transiciones = []
+        self.EdoAcept = False
+        self.token = 0
+        self.countEdos = 0
+    
+    def __eq__(self, other):
+        if isinstance(other, Estado):
+            return (self.idEdo == other.idEdo and
+                    self.transiciones == other.transiciones and
+                    self.EdoAcept == other.EdoAcept and
+                    self.token == other.token and
+                    self.countEdos == other.countEdos)
+        return False
 
-    @classmethod
-    def init_data(cls, idEdo, transiciones, EdoAcept, token, countEdos):
-        estado = cls() 
-        estado._idEdo = idEdo
-        estado._transiciones = transiciones
-        estado._EdoAcept = EdoAcept
-        estado._token = token
-        estado._countEdos = countEdos
-        return estado
+    def __hash__(self):
+        return hash((self.idEdo, tuple(self.transiciones), self.EdoAcept, self.token, self.countEdos))
 
-    @classmethod
-    def init_edo(cls, auxEdo):
-        estado = cls() 
-        estado._idEdo = auxEdo._idEdo
-        estado._transiciones = auxEdo._transiciones
-        estado._EdoAcept = auxEdo._EdoAcept
-        estado._token = auxEdo._token
-        estado._countEdos = auxEdo._countEdos
-        return estado
-    # idEdo
-    @property
-    def id_edo(self):
-        return self._idEdo
+    def init_data(self, idEdo, transiciones, EdoAcept, token, countEdos):
+        self.idEdo = idEdo
+        self.transiciones = transiciones
+        self.EdoAcept = EdoAcept
+        self.token = token
+        self.countEdos = countEdos
 
-    @id_edo.setter
-    def id_edo(self, idEdo):
-        self._idEdo = idEdo
+    def init_edo(self, auxEdo):
+        self.idEdo = auxEdo._idEdo
+        self.transiciones = auxEdo._transiciones
+        self.EdoAcept = auxEdo._EdoAcept
+        self.token = auxEdo._token
+        self.countEdos = auxEdo._countEdos
 
-    # transiciones
-    @property
-    def transiciones(self):
-        return self._transiciones
+    def get_idEdo(self):
+        return self.idEdo
 
-    @transiciones.setter
-    def transiciones(self, transiciones):
-        self._transiciones = transiciones
+    def set_idEdo(self, idEdo):
+        self.idEdo = idEdo
 
-    # EdoAcept
-    @property
-    def edo_acept(self):
-        return self._EdoAcept
+    def get_transiciones(self):
+        return self.transiciones
 
-    @edo_acept.setter
-    def edo_acept(self, EdoAcept):
-        self._EdoAcept = EdoAcept
+    def set_transiciones(self, transiciones):
+        self.transiciones = transiciones
 
-    # token
-    @property
-    def token(self):
-        return self._token
+    def get_EdoAcept(self):
+        return self.EdoAcept
 
-    @token.setter
-    def token(self, token):
-        self._token = token
+    def set_EdoAcept(self, EdoAcept):
+        self.EdoAcept = EdoAcept
 
-    # countEdos
-    @property
-    def count_edos(self):
-        return self._countEdos
+    def get_token(self):
+        return self.token
 
-    @count_edos.setter
-    def count_edos(self, countEdos):
-        self._countEdos = countEdos
+    def set_token(self, token):
+        self.token = token
 
+    def get_countEdos(self):
+        return self.countEdos
+
+    def set_countEdos(self, countEdos):
+        self.countEdos = countEdos
+   
     

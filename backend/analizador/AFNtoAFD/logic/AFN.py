@@ -1,4 +1,8 @@
 import estado, transicion
+import renglon as r
+import Si as s
+import Operations as op
+
 eps = 'ε'
 class AFN:
     def __init__(self):
@@ -11,214 +15,244 @@ class AFN:
         self.automatas = []
         self.unido = False
 
-    @classmethod
-    def init_data(cls, idAFN, edoInicial, edosAFN, alphabet, edosAcept, countIdAFN, automatas, unido):
-        afn = cls()
-        afn.idAFN = idAFN
-        afn.edoInicial = edoInicial
-        afn.edosAFN = edosAFN
-        afn.alphabet = alphabet
-        afn.edosAcept = edosAcept
-        afn.countIdAFN = countIdAFN
-        afn.automatas = automatas
-        afn.unido = unido
-        return afn
+    # Getters and Setters
+    def get_idAFN(self):
+        return self.idAFN
+
+    def set_idAFN(self, idAFN):
+        self.idAFN = idAFN
+
+    def get_edoInicial(self):
+        return self.edoInicial
+
+    def set_edoInicial(self, edoInicial):
+        self.edoInicial = edoInicial
+
+    def get_edosAFN(self):
+        return self.edosAFN
+
+    def set_edosAFN(self, edosAFN):
+        self.edosAFN = edosAFN
+
+    def get_alphabet(self):
+        return self.alphabet
+
+    def set_alphabet(self, alphabet):
+        self.alphabet = alphabet
+
+    def get_edosAcept(self):
+        return self.edosAcept
+
+    def set_edosAcept(self, edosAcept):
+        self.edosAcept = edosAcept
+
+    def get_countIdAFN(self):
+        return self.countIdAFN
+
+    def set_countIdAFN(self, countIdAFN):
+        self.countIdAFN = countIdAFN
+
+    def get_automatas(self):
+        return self.automatas
+
+    def set_automatas(self, automatas):
+        self.automatas = automatas
+
+    def get_unido(self):
+        return self.unido
+
+    def set_unido(self, unido):
+        self.unido = unido
+
+    def init_data(self, idAFN, edoInicial, edosAFN, alphabet, edosAcept, countIdAFN, automatas, unido):
+        self.set_idAFN(idAFN)
+        self.set_edoInicial(edoInicial)
+        self.set_edosAFN(edosAFN)
+        self.set_alphabet(alphabet)
+        self.set_edosAcept(edosAcept)
+        self.set_countIdAFN(countIdAFN)
+        self.set_automatas(automatas)
+        self.set_unido(unido)
     
-    @classmethod
-    def init_AFN(cls, auxAFN):
-        afn = cls()
-        afn.idAFN = auxAFN.idAFN
-        afn.edoInicial = auxAFN.edoInicial
-        afn.edosAFN = auxAFN.edosAFN
-        afn.alphabet = auxAFN.alphabet
-        afn.edosAcept = auxAFN.edosAcept
-        afn.countIdAFN = auxAFN.countIdAFN
-        afn.automatas = auxAFN.automatas
-        afn.unido = auxAFN.unido
-        return afn
+    def init_AFN(self, auxAFN):
+        self.set_idAFN(auxAFN.get_idAFN())
+        self.set_edoInicial(auxAFN.get_edoInicial())
+        self.set_edosAFN(auxAFN.get_edosAFN())
+        self.set_alphabet(auxAFN.get_alphabet())
+        self.set_edosAcept(auxAFN.get_edosAcept())
+        self.set_countIdAFN(auxAFN.get_countIdAFN())
+        self.set_automatas(auxAFN.get_automatas())
+        self.set_unido(auxAFN.get_unido())
     
-    # idAFN
-    @property
-    def idAFN(self):
-        return self._idAFN
-
-    @idAFN.setter
-    def idAFN(self, value):
-        self._idAFN = value
-
-    # edoInicial
-    @property
-    def edoInicial(self):
-        return self._edoInicial
-
-    @edoInicial.setter
-    def edoInicial(self, value):
-        self._edoInicial = value
-
-    # edosAFN
-    @property
-    def edosAFN(self):
-        return self._edosAFN
-
-    @edosAFN.setter
-    def edosAFN(self, value):
-        self._edosAFN = value
-
-    # alphabet
-    @property
-    def alphabet(self):
-        return self._alphabet
-
-    @alphabet.setter
-    def alphabet(self, value):
-        self._alphabet = value
-
-    # edosAcept
-    @property
-    def edosAcept(self):
-        return self._edosAcept
-
-    @edosAcept.setter
-    def edosAcept(self, value):
-        self._edosAcept = value
-
-    # countIdAFN
-    @property
-    def countIdAFN(self):
-        return self._countIdAFN
-
-    @countIdAFN.setter
-    def countIdAFN(self, value):
-        self._countIdAFN = value
-
-    # automatas
-    @property
-    def automatas(self):
-        return self._automatas
-
-    @automatas.setter
-    def automatas(self, value):
-        self._automatas = value
-
-    # unido
-    @property
-    def unido(self):
-        return self._unido
-
-    @unido.setter
-    def unido(self, value):
-        self._unido = value
-
-    #metodos para trabajar
-    @classmethod
-    def crearAFNBasicoChar(cls, simbolo):
-        automata = cls()
+    #metodos para trabajar con el automata
+    def crearAFNBasicoChar(self, simbolo):
         e1, e2 = estado.Estado(), estado.Estado()
-
-        t = transicion.Transicion.init_data(simbolo, simbolo, e2)
+        t = transicion.Transicion()
+        t.init_data(simbolo, simbolo, e2)
         e1.transiciones.append(t)
-        e2.edo_acept = True
+        e2.set_EdoAcept(True)
 
-        automata.edoInicial = e1
-        automata.edosAFN.append(e1)
-        automata.edosAFN.append(e2)
-        automata.alphabet.append(simbolo)
-        automata.edosAcept.append(e2)
-        automata.unido = False
-
-        return automata
+        self.set_edoInicial(e1)
+        self.edosAFN.append(e1)
+        self.edosAFN.append(e2)
+        self.alphabet.append(simbolo)
+        self.edosAcept.append(e2)
+        self.set_unido(False)
     
-    @classmethod
-    def crearAFNBasicoRange(cls, simbolo1, simbolo2):
-        automata = cls()
+    def crearAFNBasicoRange(self, simbolo1, simbolo2):
         e1, e2 = estado.Estado(), estado.Estado()
-
-        t = transicion.Transicion.init_data(simbolo1, simbolo2, e2)
+        t = transicion.Transicion()
+        t.init_data(simbolo1, simbolo2, e2)
         e1.transiciones.append(t)
-        e2.edo_acept = True
+        e2.set_EdoAcept(True)
 
-        automata.edoInicial = e1
-        automata.edosAFN.append(e1)
-        automata.edosAFN.append(e2)
+        self.set_edoInicial(e1)
+        self.edosAFN.append(e1)
+        self.edosAFN.append(e2)
 
         for i in range(ord(simbolo1), ord(simbolo2) + 1):
-            automata.alphabet.append(chr(i))
+            self.alphabet.append(chr(i))
 
-        automata.edosAcept.append(e2)
-        automata.unido = False
-
-        return automata
+        self.edosAcept.append(e2)
+        self.set_unido(False)
     
-    @classmethod
-    def Unir(_,current, afn):
+    def Unir(self,afn):
         e1, e2 = estado.Estado(), estado.Estado()
-        t1 = transicion.Transicion.init_data(eps, eps, current.edoInicial)
-        t2 = transicion.Transicion.init_data(eps, eps, afn.edoInicial)
+        t1, t2 = transicion.Transicion(), transicion.Transicion()
+
+        t1.init_data(eps, eps, self.edoInicial)
+        t2.init_data(eps, eps, afn.edoInicial)
 
         e1.transiciones.append(t1)
         e1.transiciones.append(t2)
-        t1 = transicion.Transicion.init_data(eps, eps, e2)
 
-        for e in current.edosAcept:
-            e.transiciones.append(t1)
-            e.edo_acept = False
+        t3 = transicion.Transicion()
+        t3.init_data(eps, eps, e2)
+
+        for e in self.edosAcept:
+            e.transiciones.append(t3)
+            e.set_EdoAcept(False)
         for e in afn.edosAcept:
-            e.transiciones.append(t1)
-            e.edo_acept = False
+            e.transiciones.append(t3)
+            e.set_EdoAcept(False)
 
-        e2.edo_acept = True
-        current.edoInicial = e1
+        e2.set_EdoAcept(True)
+        self.set_edoInicial(e1)
 
         for e in afn.edosAFN:
-            current.edosAFN.append(e)
-        
+            self.edosAFN.append(e)
 
-        current.edosAFN.append(e1)
-        current.edosAFN.append(e2)
-        current.edosAcept.clear()
-        current.edosAcept.append(e2)
+        self.edosAFN.append(e1)
+        self.edosAFN.append(e2)
+        self.edosAcept.clear()
+        self.edosAcept.append(e2)
         for a in afn.alphabet:
-            if a not in current.alphabet:
-                current.alphabet.append(a)
-        return current
+            if a not in self.alphabet:
+                self.alphabet.append(a)
 
-    @classmethod
-    def Concatenar(_,current, afn):
+    def Concatenar(self, afn):
         for t in afn.edoInicial.transiciones:
-            for e in current.edosAcept:
+            for e in self.edosAcept:
                 e.transiciones.append(t)
-                e.edoAcept = False
+                e.set_EdoAcept(False)
 
         for e in afn.edosAFN:
             if e != afn.edoInicial:
-                current.edosAFN.append(e)
-        current.edosAcept.clear()
+                self.edosAFN.append(e)
+        
+        for a in afn.alphabet:
+            if a not in self.alphabet:
+                self.alphabet.append(a)
+                
+        self.edosAcept.clear()
         for e in afn.edosAcept:
-            current.edosAcept.append(e)
-        
-        return current
+            self.edosAcept.append(e)
 
-    @classmethod
-    def CerraduraPositiva(_,current):
+    def CerraduraPositiva(self):
         e1, e2 = estado.Estado(), estado.Estado()
+        t1 = transicion.Transicion()
 
-        e1.transiciones.append(transicion.Transicion.init_data(eps, eps, current.edoInicial))
-        for e in current.edosAcept:
-            e.transiciones.append(transicion.Transicion.init_data(eps, eps, e2))
-            e.transiciones.append(transicion.Transicion.init_data(eps, eps, current.edoInicial))
-            e.edoAcept = False
+        t1.init_data(eps, eps, self.edoInicial)
+        e1.transiciones.append(t1)
+        for e in self.edosAcept:
+            taux1,taux2 = transicion.Transicion(), transicion.Transicion()
+            taux1.init_data(eps, eps, e2)
+            taux2.init_data(eps, eps, self.edoInicial)
+
+            e.transiciones.append(taux1)
+            e.transiciones.append(taux2)
+            e.set_EdoAcept(False)
         
-        current.edosAcept.clear()
-        current.edosAcept.append(e2)
-        e2.edoAcept = True
-        current.edoInicial = e1
-        current.edosAFN.append(e1)
-        current.edosAFN.append(e2)
-        return current
+        self.edosAcept.clear()
+        self.edosAcept.append(e2)
+        e2.set_EdoAcept(True)
+        self.set_edoInicial(e1)
+        self.edosAFN.append(e1)
+        self.edosAFN.append(e2)
 
-    @classmethod
-    def CerraduraKleene(_,current):
-        current = current.CerraduraPositiva(current)
-        current.edoInicial.transiciones.append(transicion.Transicion.init_data(eps,eps,current.edosAcept[0]))
+    def CerraduraKleene(self):
+        t = transicion.Transicion()
 
-        return current
+        self.CerraduraPositiva()
+        t.init_data(eps,eps,self.edosAcept[0])
+        self.edoInicial.transiciones.append(t)
+
+    def Opcional(self):
+        e1, e2 = estado.Estado(), estado.Estado()
+        t1, t2 = transicion.Transicion(), transicion.Transicion()
+
+        t1.init_data(eps, eps, self.edoInicial)
+        t2.init_data(eps, eps, e2)
+        e1.transiciones.append(t1)
+
+        for e in self.edosAcept:
+            e.transiciones.append(t2);
+            e.set_EdoAcept(False)
+
+        self.set_edoInicial(e1)
+        self.edoInicial.transiciones.append(t2)
+        e2.set_EdoAcept(True)
+        self.edosAcept.clear()
+        self.edosAcept.append(e2)
+        self.edosAFN.append(e1)
+        self.edosAFN.append(e2)
+        return self
+    
+    def EstadoSi(self):
+        token = 0
+        C = []  # Conjunto of Si's
+        Q = []  # Queue
+        EdosAFN = []  # Queue of states
+        counter = 0
+        Saux = s.Si()
+
+        counter += 1
+        Saux.init_data(counter, op.CerraduraES(self.edoInicial))
+        Saux.accept = op.EsAceptacion(Saux)
+
+        Q.append(Saux)
+        C.append(Saux)
+
+        while len(Q) > 0:
+            Saux = Q.pop(0)
+            previous = Saux.get_id()
+            for a in self.alphabet:
+                Raux = r.Renglon()
+                Sk = s.Si()  
+                Sk.S = op.Ir_AC(Saux.S, a)
+                Sk.set_accept(op.EsAceptacion(Sk))
+
+                if Sk.S:
+                    if not op.ContieneSj(C, Sk):
+                        counter += 1
+                        Sk.set_id(counter)
+                        Q.append(Sk)
+                        C.append(Sk)
+                        Raux.Assign(a, Sk.get_id())
+                        Raux.SetOrigin(previous)
+                        previous = Sk.get_id()
+                        if Sk.get_accept():
+                            token += 10
+                            Raux.setToken(token)
+                        EdosAFN.append(Raux)
+        return C, EdosAFN

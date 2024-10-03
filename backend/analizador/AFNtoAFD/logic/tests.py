@@ -1,23 +1,41 @@
 import AFN
 import estado
 import transicion
+import Operations as op
 
 count = 0
 afn, afn2, afn3 = AFN.AFN(), AFN.AFN(), AFN.AFN()
-afn = afn.crearAFNBasicoChar('a')
-afn2 = afn2.crearAFNBasicoChar('b')
-afn3 = afn3.crearAFNBasicoChar('c')
-afn = afn.Concatenar(afn, afn3)
-afn = afn.CerraduraPositiva(afn)
+afn.crearAFNBasicoChar('a')
+afn2.crearAFNBasicoChar('b')
+afn3.crearAFNBasicoChar('c')
+afn.Concatenar(afn2)
+afn.Unir(afn3)
+afn.CerraduraKleene()
 
-count = 0
 for e in afn.edosAFN:
-    count = count + 1
-    e.id_edo = count
+   count += 1
+   e.idEdo = count
 
-print("Estado incial: ", afn.edoInicial.id_edo)
+print("inicial: ", afn.edoInicial.idEdo)
 for e in afn.edosAcept:
-    print("Estado aceptacion: ", e.id_edo) 
-for e in afn.edosAFN:
-    for t in e.transiciones:
-        print('Estado: ', e.id_edo, 'SimboloInf: ', t.simboloInf, 'SimboloSup: ', t.simboloSup, 'EdoDestino: ', t.edoDestino.id_edo)
+    print("Aceptacion: ", e.idEdo)
+for element in afn.edosAFN:
+    for t in element.transiciones:
+        print(element.idEdo, "(", t.simboloInf, "-" , t.simboloSup, ")","-->",t.edoDestino.idEdo)
+
+Sj, queue = afn.EstadoSi()
+print("")
+
+# for e in Sj:
+#     print(e)
+while len(queue) > 0:
+    top = queue.pop(0)
+    for i in range(1,len(top.movimientos)-1):
+        if top.movimientos[i] != -1:
+            if top.movimientos[257] != -1:
+                p1 = "("
+                p2 = ")"
+            else:
+                p1 = " "
+                p2 = " "
+            print("(", top.movimientos[0], ")", chr(i), "-->", p1, "(", top.movimientos[i], ")", p2)
