@@ -31,12 +31,6 @@
     justify-content: center;
 }
 
-.javaCode {
-    background-color: #000000;
-    width: 80%;
-    max-height: 90%;
-    /* overflow: scroll; */
-}
 
 code {
     font-size: 1em;

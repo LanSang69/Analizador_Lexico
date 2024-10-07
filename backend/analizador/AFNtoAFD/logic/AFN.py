@@ -236,10 +236,20 @@ class AFN:
         while len(Q) > 0:
             Saux = Q.pop(0)
             previous = Saux.get_id()
-            for a in self.alphabet:
+            i = 0  # Ensure `i` starts from 0 for each new state
+            while i < len(self.alphabet):
+                j = i
                 Raux = r.Renglon()
+                repetidos = []
                 Sk = s.Si()  
-                Sk.S = op.Ir_AC(Saux.S, a)
+                Sk.S = op.Ir_AC(Saux.S, self.alphabet[i])
+                repetidos.append(self.alphabet[i])
+                j += 1
+                # Add a boundary check for `j` to prevent index out of range
+                while j < len(self.alphabet) and Sk.S == op.Ir_AC(Saux.S, self.alphabet[j]):
+                    repetidos.append(self.alphabet[j])
+                    j += 1
+                i = j  # Update `i` to avoid processing the same range again
                 Sk.set_accept(op.EsAceptacion(Sk))
 
                 if Sk.S:
@@ -248,9 +258,9 @@ class AFN:
                         Sk.set_id(counter)
                         Q.append(Sk)
                         C.append(Sk)
-                        Raux.Assign(a, Sk.get_id())
+                        for element in repetidos:
+                            Raux.Assign(element, Sk.get_id())
                         Raux.SetOrigin(previous)
-                        previous = Sk.get_id()
                         if Sk.get_accept():
                             token += 10
                             Raux.setToken(token)

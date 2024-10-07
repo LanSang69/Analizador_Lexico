@@ -10,9 +10,19 @@
     color: var(--label);
 }
 
-.errors-container {
-    margin-left: 15px;
+.btn-primary{
+    border-color: #ffff;
+    background-color: #171717ff;
 }
+
+.btn-primary:hover,
+.btn-primary:focus {
+    color: #171717ff;
+    background-color: #ffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 
 .errors-logo {
     margin-right: 15px;

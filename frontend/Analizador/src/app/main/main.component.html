@@ -1,21 +1,18 @@
 <div id="main" class="d-flex flex-column min-vh-100 min-vw-100">
-  <div  class="d-flex min-vh-100">
+  <div class="d-flex min-vh-100">
     <div class="options-section" style="width: 15%;">
-        <app-options></app-options>
+      <app-options (componentSelected)="selectOnMain($event)"></app-options>
     </div>
-  
-    <div class="code-section container d-flex align-items-center justify-content-center" id="code" style="width: 85%;">
-      <div class="javaCode code-text">
-        <div class="bg-gray container d-flex align-items-center">
-          <div class="code-container coding" id="code-content">
-            Operaciones disponibles:
-          </div>
-        </div>
-        <pre>
-          <code class="align-flex">
-          </code>
-        </pre>
-      </div>
+
+    <div class="main-section mx-auto">
+      <app-crear-basico *ngIf="selectedComponent === 'crearBasico'"></app-crear-basico>
+      <app-concatenar *ngIf="selectedComponent === 'concatenar'"></app-concatenar>
+      <app-cerradura-positiva *ngIf="selectedComponent === 'cerraduraPositiva'"></app-cerradura-positiva>
+      <app-cerradura-kleene *ngIf="selectedComponent === 'cerraduraKleene'"></app-cerradura-kleene>
+      <app-opcional *ngIf="selectedComponent === 'opcional'"></app-opcional>
+      <app-unir-afns *ngIf="selectedComponent === 'unirAfns'"></app-unir-afns>
+      <app-convertir *ngIf="selectedComponent === 'convertir'"></app-convertir>
+      <app-analisis-lexico *ngIf="selectedComponent === 'analisisLexico'"></app-analisis-lexico>
     </div>
-  
   </div>
+</div>
