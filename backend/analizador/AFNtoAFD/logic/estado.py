@@ -1,4 +1,4 @@
-import transicion
+from . import transicion
 class Estado:
     def __init__(self):
         self.idEdo = None

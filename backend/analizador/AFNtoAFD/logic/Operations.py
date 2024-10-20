@@ -1,24 +1,25 @@
-import renglon as r
-import Si as s
-import AFN as a
-import regexToPost as regex
+from . import renglon as r
+from . import Si as s
+from . import AFN as a
+from . import regexToPost as regex
 operators = ['|', '*', '+', '&']
 eps = 'ε'
 
 def print_afn_details(afn):
+    details = []
     count = 0
     for e in afn.edosAFN:
         count += 1
         e.idEdo = count
 
-    print("inicial: ", afn.edoInicial.idEdo)
+    details.append(f"inicial: {afn.edoInicial.idEdo}")
     for e in afn.edosAcept:
-        print("Aceptacion: ", e.idEdo)
+        details.append(f"Aceptacion: {e.idEdo}")
     for element in afn.edosAFN:
         for t in element.transiciones:
-            print(element.idEdo, "(", t.simboloInf, "-" , t.simboloSup, ")","-->",t.edoDestino.idEdo)
+            details.append(f"{element.idEdo} ({t.simboloInf}-{t.simboloSup}) --> {t.edoDestino.idEdo}")
     Sj, queue = afn.EstadoSi()
-    return Sj, queue
+    return "\n".join(details)
 
 def expToAFN(exp):
     pila = []

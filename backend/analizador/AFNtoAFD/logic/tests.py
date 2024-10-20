@@ -1,14 +1,12 @@
-import AFN
-import Operations as op
-import AFD
-import Analizador as A
+# import AFN
+# import Operations as op
+# import AFD
+# import Analizador as A
 
 # count = 0
-# afn, afn2, afn3, afn4 = AFN.AFN(), AFN.AFN(), AFN.AFN(), AFN.AFN()
-# afn.crearAFNBasicoChar('a')
-# afn2.crearAFNBasicoChar('b')
-# afn3.crearAFNBasicoRange('c',"z")
-# afn.Unir(afn3)
+# input1 = input("Ingrese una expresion regular: ")
+
+# afn = op.expToAFN(input1)
 
 # for e in afn.edosAFN:
 #    count += 1
@@ -25,20 +23,15 @@ import Analizador as A
 # auxAFD = AFD.AFD()
 # auxAFD.initTabla(queue)
 # auxAnalizador = A.AnalizadorLexico()
-# auxAnalizador.initWithTable("ababababab",auxAFD)
+# auxAnalizador.initWithTable("babababab",auxAFD)
 
-# for i in range(257):
-#     if i > 47:
-#         print(chr(i), end='\t')
-#     else:
-#         print("-1", end='\t')
 # # Print the table rows
 # auxAFD.guardarEnString()
-# print(auxAFD.archivo)
+# with open("output.txt", "w") as f:
+#     f.write("Tabla de transiciones:\n")
+#     for e in auxAFD.getTablaAFD():
+#         f.write(" ".join(str(m) for m in e) + "\n")
 
-# # print("yylex: ")
-# # print(auxAnalizador.yylex())
-count = 0
-input1 = input("Ingrese una expresion regular: ")
-
-afn = op.expToAFN(input1)
+# print("yylex: ")
+# print(auxAnalizador.yylex())
+# print(auxAnalizador.Lexema)

@@ -1,4 +1,5 @@
-import AFN
+from . import AFN
+from .import simbolosEspeciales as s
 
 class AFD:
     def __init__(self) -> None:

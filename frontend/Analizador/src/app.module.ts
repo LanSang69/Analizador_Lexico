@@ -14,6 +14,10 @@ import { UnirAFNsComponent } from './app/main/unir-afns/unir-afns.component';
 import { ConvertirComponent } from './app/main/convertir/convertir.component';
 import { AnalisisLexicoComponent } from './app/main/analisis-lexico/analisis-lexico.component';
 import { WelcomeComponent } from './app/main/welcome/welcome.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,11 +32,15 @@ import { WelcomeComponent } from './app/main/welcome/welcome.component';
     UnirAFNsComponent,
     ConvertirComponent,
     AnalisisLexicoComponent,
-    WelcomeComponent
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(),
   ],
   providers: [
     provideClientHydration()

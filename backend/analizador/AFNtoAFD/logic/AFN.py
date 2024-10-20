@@ -1,7 +1,7 @@
-import estado, transicion
-import renglon as r
-import Si as s
-import Operations as op
+from . import estado, transicion
+from . import renglon as r
+from . import Si as s
+from . import Operations as op
 
 eps = 'ε'
 class AFN:

@@ -1,5 +1,5 @@
-import AFD
-import simbolosEspeciales as s
+from . import AFD
+from . import simbolosEspeciales as s
 
 class AnalizadorLexico:
     def __init__(self) -> None:
@@ -147,7 +147,7 @@ class AnalizadorLexico:
             self.Lexema = self.CadenaSigma[self.InitLexema:self.FinLexema + 1]
             self.IndiceCaracterActual = self.FinLexema + 1
 
-            if self.token == s.Simbolos.OMITIR: #Handle the number for Omitir
+            if self.token == s.Simbolos.OMITIR: #Manejar el simbolo especial de omitir
                 continue
             else:
                 return self.token
