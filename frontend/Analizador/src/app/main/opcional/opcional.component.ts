@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-opcional',
   templateUrl: './opcional.component.html',
-  styleUrl: './opcional.component.css'
+  styleUrls: ['./opcional.component.css', '../main.component.css']
 })
 export class OpcionalComponent {
 

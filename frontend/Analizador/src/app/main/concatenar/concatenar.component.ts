@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-concatenar',
   templateUrl: './concatenar.component.html',
-  styleUrl: './concatenar.component.css'
+  styleUrls: ['./concatenar.component.css', '../main.component.css']
 })
 export class ConcatenarComponent {
 

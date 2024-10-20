@@ -58,3 +58,7 @@ code {
 .options-section {
     background-color: #171717ff;
 }
+
+img{
+    max-height: 250px;
+}

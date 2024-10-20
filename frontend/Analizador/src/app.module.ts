@@ -13,6 +13,7 @@ import { OpcionalComponent } from './app/main/opcional/opcional.component';
 import { UnirAFNsComponent } from './app/main/unir-afns/unir-afns.component';
 import { ConvertirComponent } from './app/main/convertir/convertir.component';
 import { AnalisisLexicoComponent } from './app/main/analisis-lexico/analisis-lexico.component';
+import { WelcomeComponent } from './app/main/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AnalisisLexicoComponent } from './app/main/analisis-lexico/analisis-lex
     OpcionalComponent,
     UnirAFNsComponent,
     ConvertirComponent,
-    AnalisisLexicoComponent
+    AnalisisLexicoComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

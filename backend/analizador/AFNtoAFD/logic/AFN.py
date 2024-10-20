@@ -221,8 +221,8 @@ class AFN:
     def EstadoSi(self):
         token = 0
         C = []  # Conjunto of Si's
-        Q = []  # Queue
-        EdosAFN = []  # Queue of states
+        Q = []  # Cola
+        EdosAFN = []  # Cola con "renglones"
         counter = 0
         Saux = s.Si()
 
@@ -236,20 +236,21 @@ class AFN:
         while len(Q) > 0:
             Saux = Q.pop(0)
             previous = Saux.get_id()
-            i = 0  # Ensure `i` starts from 0 for each new state
+            i = 0  
+            Raux = r.Renglon()
+            Raux.SetOrigin(previous)
             while i < len(self.alphabet):
                 j = i
-                Raux = r.Renglon()
                 repetidos = []
                 Sk = s.Si()  
                 Sk.S = op.Ir_AC(Saux.S, self.alphabet[i])
                 repetidos.append(self.alphabet[i])
                 j += 1
-                # Add a boundary check for `j` to prevent index out of range
+                
                 while j < len(self.alphabet) and Sk.S == op.Ir_AC(Saux.S, self.alphabet[j]):
                     repetidos.append(self.alphabet[j])
                     j += 1
-                i = j  # Update `i` to avoid processing the same range again
+                i = j  
                 Sk.set_accept(op.EsAceptacion(Sk))
 
                 if Sk.S:
@@ -258,11 +259,17 @@ class AFN:
                         Sk.set_id(counter)
                         Q.append(Sk)
                         C.append(Sk)
+                    for element in repetidos:
+                        Raux.Assign(element, Sk.get_id()) 
+                    
+                    else:
+                        index = op.IndexOfSj(C, Sk)
                         for element in repetidos:
-                            Raux.Assign(element, Sk.get_id())
-                        Raux.SetOrigin(previous)
-                        if Sk.get_accept():
-                            token += 10
-                            Raux.setToken(token)
-                        EdosAFN.append(Raux)
+                            Raux.Assign(element, C[index].get_id())
+
+            if Saux.get_accept():
+                token += 10
+                Raux.setToken(token)
+                
+            EdosAFN.append(Raux)
         return C, EdosAFN

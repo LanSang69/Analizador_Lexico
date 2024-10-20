@@ -4,15 +4,20 @@
       <app-options (componentSelected)="selectOnMain($event)"></app-options>
     </div>
 
-    <div class="main-section mx-auto">
-      <app-crear-basico *ngIf="selectedComponent === 'crearBasico'"></app-crear-basico>
-      <app-concatenar *ngIf="selectedComponent === 'concatenar'"></app-concatenar>
-      <app-cerradura-positiva *ngIf="selectedComponent === 'cerraduraPositiva'"></app-cerradura-positiva>
-      <app-cerradura-kleene *ngIf="selectedComponent === 'cerraduraKleene'"></app-cerradura-kleene>
-      <app-opcional *ngIf="selectedComponent === 'opcional'"></app-opcional>
-      <app-unir-afns *ngIf="selectedComponent === 'unirAfns'"></app-unir-afns>
-      <app-convertir *ngIf="selectedComponent === 'convertir'"></app-convertir>
-      <app-analisis-lexico *ngIf="selectedComponent === 'analisisLexico'"></app-analisis-lexico>
+    <div class="main-section mx-auto container d-flex justify-content-center vh-100">
+      <div class="text-center">
+        <app-crear-basico *ngIf="selectedComponent === 'crearBasico'"></app-crear-basico>
+        <app-concatenar *ngIf="selectedComponent === 'concatenar'"></app-concatenar>
+        <app-cerradura-positiva *ngIf="selectedComponent === 'cerraduraPositiva'"></app-cerradura-positiva>
+        <app-cerradura-kleene *ngIf="selectedComponent === 'cerraduraKleene'"></app-cerradura-kleene>
+        <app-opcional *ngIf="selectedComponent === 'opcional'"></app-opcional>
+        <app-unir-afns *ngIf="selectedComponent === 'unirAfns'"></app-unir-afns>
+        <app-convertir *ngIf="selectedComponent === 'convertir'"></app-convertir>
+        <app-analisis-lexico *ngIf="selectedComponent === 'analisisLexico'"></app-analisis-lexico>
+        <app-welcome *ngIf="selectedComponent === ''"></app-welcome>
+      </div>
     </div>
+
   </div>
 </div>
+

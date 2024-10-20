@@ -11,5 +11,6 @@ export class OptionsComponent {
 
   selectComponent(component: string) {
     this.componentSelected.emit(component);
+    console.log(component);
   }
 }
