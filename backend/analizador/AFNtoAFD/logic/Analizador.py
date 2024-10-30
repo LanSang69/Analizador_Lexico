@@ -106,7 +106,6 @@ class AnalizadorLexico:
         self.Pila.clear()
 
     # def cadenaXanalizar
-
     def yylex(self) -> int: 
         while True:
             self.Pila.append(self.IndiceCracterActual)
@@ -114,7 +113,7 @@ class AnalizadorLexico:
             if self.IndiceCaracterActual >= len(self.CadenaSigma):
                 self.Lexema = ""
                 return s.Simbolos.FIN
-            
+
             self.InitLexema = self.IndiceCaracterActual
             self.EdoActual = 1
             self.PasoPorEdoAcept = False
@@ -123,37 +122,49 @@ class AnalizadorLexico:
 
             while self.IndiceCaracterActual < len(self.CadenaSigma):
                 self.CaracterActual = self.CadenaSigma[self.IndiceCaracterActual]
-                # print(self.CadenaSigma[self.IndiceCaracterActual])
-                self.EdoTransicion = self.AutomataFD.tablaAFD[self.EdoActual][ord(self.CaracterActual)]
-                # print("transicion: ",self.EdoActual, self.EdoTransicion)
-                if self.EdoTransicion != -1:
-                    if self.AutomataFD.tablaAFD[self.EdoTransicion][257] != -1:
-                        self.PasoPorEdoAcept = True
-                        self.token = self.AutomataFD.tablaAFD[self.EdoTransicion][257]
-                        # print("token: ", self.token)
-                        self.FinLexema = self.IndiceCaracterActual
-                    self.IndiceCaracterActual+=1
-                    # print("indice: ", self.IndiceCaracterActual)
-                    self.EdoActual = self.EdoTransicion
-                    continue
-                break
+                try:
+                    # Ensuring EdoActual is an integer
+                    self.EdoActual = int(self.EdoActual)
+                    self.EdoTransicion = int(self.AutomataFD.tablaAFD[self.EdoActual][ord(self.CaracterActual)])
+                    
+                    if self.EdoTransicion != -1:
+                        self.EdoTransicion = int(self.EdoTransicion)  # Ensure it’s an integer
+                        if self.AutomataFD.tablaAFD[self.EdoTransicion][257] != -1:
+                            self.PasoPorEdoAcept = True
+                            self.token = self.AutomataFD.tablaAFD[self.EdoTransicion][257]
+                            self.FinLexema = self.IndiceCaracterActual
+                        self.IndiceCaracterActual += 1
+                        self.EdoActual = self.EdoTransicion
+                        continue
+                    break
+                except (IndexError, ValueError, TypeError) as e:
+                    print(f"Error accessing `tablaAFD`: {e}")
+                    self.IndiceCaracterActual = self.InitLexema + 1
+                    self.Lexema = self.CadenaSigma[self.InitLexema]
+                    self.token = s.Simbolos.ERROR
+                    return self.token
 
             if not self.PasoPorEdoAcept:
                 self.IndiceCaracterActual = self.InitLexema + 1
                 self.Lexema = self.CadenaSigma[self.InitLexema]
-                self.token = s.Simbolos.ERROR #Manejar el simbolo especial de error
+                self.token = s.Simbolos.ERROR
                 return self.token
-            
+
             self.Lexema = self.CadenaSigma[self.InitLexema:self.FinLexema + 1]
             self.IndiceCaracterActual = self.FinLexema + 1
 
-            if self.token == s.Simbolos.OMITIR: #Manejar el simbolo especial de omitir
+            if self.token == s.Simbolos.OMITIR:
                 continue
             else:
                 return self.token
+
     
     def UndoToken(self) -> None:
         if len(self.Pila) == 0:
             return False
         self.IndiceCaracterActual = self.Pila.pop()
         return True
+    
+    def yytext(self) -> str:
+        return self.Lexema
+    

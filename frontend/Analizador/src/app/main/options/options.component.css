@@ -35,3 +35,7 @@
 hr {
     color: var(--label);
 }
+
+.reset{
+    margin-top: 70px;
+}

@@ -1,4 +1,4 @@
-import { Component,  ViewEncapsulation } from '@angular/core';
+import { Component,  EventEmitter,  Output,  ViewEncapsulation } from '@angular/core';
 import { crear_basico } from './crear_basico';
 import { ToastrService } from 'ngx-toastr';
 
@@ -9,6 +9,9 @@ import { ToastrService } from 'ngx-toastr';
   encapsulation: ViewEncapsulation.None // Disable view encapsulation
 })
 export class CrearBasicoComponent {
+  @Output() created = new EventEmitter<boolean>();
+  @Output() number = new EventEmitter<number>();
+  @Output() description = new EventEmitter<string>();
   simboloInferior: string = '';
   simboloSuperior: string = '';
   info: string = '';
@@ -17,6 +20,8 @@ export class CrearBasicoComponent {
 
   onSubmit(){
     this.crearBasico();
+    this.emptyValues();
+    this.created.emit(true);
   }
 
   crearBasico(){
@@ -24,12 +29,14 @@ export class CrearBasicoComponent {
       .subscribe(
         response => {
           console.log(response);
-          this.info = response.data;
           this.showSuccess(response.message);
+          this.number.emit(response.id);
+          this.description.emit(response.description);
         },
 
         error => {
           console.log(error);
+          this.showError(error.error.message);
         }
       );
   }
@@ -40,6 +47,12 @@ export class CrearBasicoComponent {
 
   showError(mesage: string) {
     this.toastr.error(mesage);
+  }
+
+  emptyValues(){
+    this.simboloInferior = '';
+    this.simboloSuperior = '';
+    this.info = '';
   }
 
 }

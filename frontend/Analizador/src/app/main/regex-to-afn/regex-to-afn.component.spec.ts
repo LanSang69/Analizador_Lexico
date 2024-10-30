@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WelcomeComponent } from './welcome.component';
+import { RegexToAFNComponent } from './regex-to-afn.component';
 
-describe('WelcomeComponent', () => {
-  let component: WelcomeComponent;
-  let fixture: ComponentFixture<WelcomeComponent>;
+describe('RegexToAFNComponent', () => {
+  let component: RegexToAFNComponent;
+  let fixture: ComponentFixture<RegexToAFNComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WelcomeComponent]
+      declarations: [RegexToAFNComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(WelcomeComponent);
+    fixture = TestBed.createComponent(RegexToAFNComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

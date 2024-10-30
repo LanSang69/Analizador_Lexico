@@ -1,0 +1,59 @@
+:root {
+    --background-main: #2b2b2b;
+    --hover-button: #FEEE91;
+}
+
+
+.dinamicGrid-1{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.dinamicGrid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.dinamicGrid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.dinamicGrid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.dinamicGrid-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.dinamicGrid-6 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: var(--background-main);
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+    width: 181px;
+    height: 181px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+  

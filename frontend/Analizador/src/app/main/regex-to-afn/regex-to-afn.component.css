@@ -8,7 +8,7 @@ input{
     padding: 7px;
     border: var(--background-main);
     border-width: 3px;
-    width: 100px;
+    width: 200px;
 }
 
 input:hover{

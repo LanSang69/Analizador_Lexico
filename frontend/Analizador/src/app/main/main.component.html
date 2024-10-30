@@ -1,23 +1,21 @@
 <div id="main" class="d-flex flex-column min-vh-100 min-vw-100">
   <div class="d-flex min-vh-100">
-    <div class="options-section" style="width: 15%;">
-      <app-options (componentSelected)="selectOnMain($event)"></app-options>
+    <div class="options-section" style="width: 10%;">
+      <app-options (componentSelected)="selectOnMain($event)" (resetAutomatas)="OnReset($event)"></app-options>
+
     </div>
 
-    <div class="main-section mx-auto container d-flex justify-content-center vh-100">
+  <div class="main-section mx-auto container d-flex justify-content-center vh-100">
       <div class="text-center mx-auto">
-        <app-crear-basico *ngIf="selectedComponent === 'crearBasico'"></app-crear-basico>
-        <app-concatenar *ngIf="selectedComponent === 'concatenar'"></app-concatenar>
-        <app-cerradura-positiva *ngIf="selectedComponent === 'cerraduraPositiva'"></app-cerradura-positiva>
-        <app-cerradura-kleene *ngIf="selectedComponent === 'cerraduraKleene'"></app-cerradura-kleene>
-        <app-opcional *ngIf="selectedComponent === 'opcional'"></app-opcional>
-        <app-unir-afns *ngIf="selectedComponent === 'unirAfns'"></app-unir-afns>
-        <app-convertir *ngIf="selectedComponent === 'convertir'"></app-convertir>
-        <app-analisis-lexico *ngIf="selectedComponent === 'analisisLexico'"></app-analisis-lexico>
-        <app-welcome *ngIf="selectedComponent === ''"></app-welcome>
+        <div class="showCreate d-flex justify-content-center" [ngClass]="{'slide-down': selectedComponent === 'crearBasico' || selectedComponent === 'regexToAFN' }">
+            <app-crear-basico (number)="automatasCreated($event)" *ngIf="selectedComponent === 'crearBasico' && basico_created == false"></app-crear-basico>
+            <app-regex-to-afn (id)="regexCreated($event)" *ngIf="selectedComponent === 'regexToAFN'"></app-regex-to-afn>
+            <app-analizar (final_table)="getTable($event)" *ngIf="selectedComponent === 'analisisLexico'"></app-analizar>
+        </div>
+        <div class="d-flex justify-content-center align-items-center vh-100">
+          <div id="dinamicContainer">
+          </div>
+        </div>
       </div>
-    </div>
-
   </div>
 </div>
-

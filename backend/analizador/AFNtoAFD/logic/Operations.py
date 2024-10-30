@@ -2,6 +2,7 @@ from . import renglon as r
 from . import Si as s
 from . import AFN as a
 from . import regexToPost as regex
+import random
 operators = ['|', '*', '+', '&']
 eps = 'ε'
 
@@ -12,12 +13,14 @@ def print_afn_details(afn):
         count += 1
         e.idEdo = count
 
-    details.append(f"inicial: {afn.edoInicial.idEdo}")
-    for e in afn.edosAcept:
-        details.append(f"Aceptacion: {e.idEdo}")
+    details.append(f"Edo inicial: ({afn.edoInicial.idEdo})")
     for element in afn.edosAFN:
         for t in element.transiciones:
-            details.append(f"{element.idEdo} ({t.simboloInf}-{t.simboloSup}) --> {t.edoDestino.idEdo}")
+            left, right = ' ', ' '
+            if t.edoDestino.EdoAcept:
+                right = ')'
+                left = '('
+            details.append(f"({element.idEdo}) -- [{t.simboloInf}-{t.simboloSup}] --> {left}({t.edoDestino.idEdo}){right}")
     Sj, queue = afn.EstadoSi()
     return "\n".join(details)
 
@@ -69,7 +72,7 @@ def expToAFN(exp):
     if len(pila) == 1:
         return pila.pop()
     else:
-        raise ValueError("Error: The stack does not contain exactly one element.")
+        raise ValueError("Error: La pila quedó con elementos sobrantes.")
             
 
 
@@ -143,3 +146,6 @@ def IndexOfSj(C, Sk):
             return index
 
     return -1
+
+def generate_random_id():
+    return random.randint(1000000000, 9999999999)

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConcatenarComponent } from './concatenar.component';
+import { AutomatasComponent } from './automatas.component';
 
-describe('ConcatenarComponent', () => {
-  let component: ConcatenarComponent;
-  let fixture: ComponentFixture<ConcatenarComponent>;
+describe('AutomatasComponent', () => {
+  let component: AutomatasComponent;
+  let fixture: ComponentFixture<AutomatasComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ConcatenarComponent]
+      declarations: [AutomatasComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ConcatenarComponent);
+    fixture = TestBed.createComponent(AutomatasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

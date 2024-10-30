@@ -1,5 +1,5 @@
 from . import AFN
-from .import simbolosEspeciales as s
+from . import simbolosEspeciales as s
 
 class AFD:
     def __init__(self) -> None:
@@ -39,6 +39,9 @@ class AFD:
 
     def getIdAFD(self):
         return self.IdAFD
+    
+    def getArchivo(self):
+        return self.archivo
 
     def getConjAFDs(self):
         return self.ConjAFDs

@@ -6,17 +6,17 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class crear_basico {
+export class AnalizarService {
 
   private baseUrl = 'http://localhost:8000'; // Django server URL
 
   constructor(private http: HttpClient, private router:Router) {}
 
-  crearBasico(inferior: string, superior: string): Observable<any> {
-    const url = `${this.baseUrl}/crear_basico/`;  // Django view URL
+  analizar(table:string, sigma:string): Observable<any> {
+    const url = `${this.baseUrl}/analizar/`;  
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    const body = { inferior, superior };
+    const body = { table, sigma };
 
     return this.http.post(url, body, { headers });
   }

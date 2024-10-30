@@ -3,14 +3,13 @@
         <form (ngSubmit)="onSubmit()" autocomplete="off">
             <div class="d-flex flex-row">
                 <div class="form-group mb-3 me-3">
-                    <input type="text" class="" id="simboloInferior" placeholder="Inferior" [(ngModel)]="simboloInferior" name="simboloInferior">
+                    <input type="text" class="" id="sigma" placeholder="Sigma" [(ngModel)]="sigma" name="regex">
                 </div>
                 <div class="form-group mb-3 me-3">
-                    <input type="text" class="" id="simboloSuperior" placeholder="Superior" [(ngModel)]="simboloSuperior"
-                        name="simboloSuperior">
+                    <input type="file" class="" id="fileInput" (change)="onFileSelected($event)" name="fileInput">
                 </div>
                 <div class="mb-3 me-3">
-                    <button type="submit" class="crear btn border-white">Crear</button>
+                    <button type="submit" class="crear btn border-white">Analizar</button>
                 </div>
             </div>
         </form>
