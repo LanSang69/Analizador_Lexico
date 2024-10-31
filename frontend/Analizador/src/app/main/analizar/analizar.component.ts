@@ -6,7 +6,7 @@ import { AnalizarService } from './AnalizarService';
 @Component({
   selector: 'app-analizar',
   templateUrl: './analizar.component.html',
-  styleUrls: ['./analizar.component.css'] // Fixed typo here
+  styleUrls: ['./analizar.component.css'] 
 })
 export class AnalizarComponent {
   sigma: string = '';

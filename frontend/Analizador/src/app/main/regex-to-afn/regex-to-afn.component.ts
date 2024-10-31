@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-regex-to-afn',
   templateUrl: './regex-to-afn.component.html',
-  styleUrls: ['./regex-to-afn.component.css'],
+  styleUrls: ['./regex-to-afn.component.css', '../main.component.css', '../toastr.css'],
   encapsulation: ViewEncapsulation.None // Disable view encapsulation
 })
 export class RegexToAFNComponent {

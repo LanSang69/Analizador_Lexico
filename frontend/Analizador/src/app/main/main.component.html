@@ -11,6 +11,7 @@
             <app-crear-basico (number)="automatasCreated($event)" *ngIf="selectedComponent === 'crearBasico' && basico_created == false"></app-crear-basico>
             <app-regex-to-afn (id)="regexCreated($event)" *ngIf="selectedComponent === 'regexToAFN'"></app-regex-to-afn>
             <app-analizar (final_table)="getTable($event)" *ngIf="selectedComponent === 'analisisLexico'"></app-analizar>
+            <app-calculadora  (events)="calcular($event)"  *ngIf="selectedComponent === 'calculadora'"></app-calculadora>
         </div>
         <div class="d-flex justify-content-center align-items-center vh-100">
           <div id="dinamicContainer">

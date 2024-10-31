@@ -3,7 +3,7 @@ import traceback
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .logic import AFN, Operations as op, AFD, Analizador as A, simbolosEspeciales as s
+from .logic import AFN, Operations as op, AFD, Analizador as A, simbolosEspeciales as s, EvaluadorExpr as E
 afns_ids = []
 afn_saved = []
 descriptions = {}
@@ -332,6 +332,49 @@ def analizar(request):
             final_table = aux
 
             return JsonResponse({'status': 'success', 'analisis': final_table, 'message': f'Transformacion completada al AFD id: {afd.getIdAFD()}'}, status=200)
+
+        except KeyError as e:
+            return JsonResponse({'status': 'error', 'message': f'Parametro faltante: {str(e)}'}, status=400)
+        except Exception as e:
+            error_message = traceback.format_exc()
+            return JsonResponse({'status': 'error', 'message': str(e), 'traceback': error_message}, status=500)
+@csrf_exempt
+def calculadora(request):
+    if request.method == 'POST':
+        try:
+            # Parse JSON and retrieve values
+            data = json.loads(request.body)
+            expresion = data.get('expresion')
+            stringAFD = data.get('automata')
+
+            if not expresion or not stringAFD:
+                return JsonResponse({'status': 'error', 'message': 'expresion or automata missing'}, status=400)
+
+            # Initialize AFD and EvaluadorExpr
+            afd = AFD.AFD()
+            afd.leerString(stringAFD)
+
+            evaluador = E.EvaluadorExpr()
+            evaluador.initWithTable(expresion, afd)
+
+            # Evaluate expression
+            response = evaluador.iniEval()
+
+            # Ensure evaluation was successful
+            if response:
+                resultado = getattr(evaluador, 'result', None)
+                postfix = getattr(evaluador, 'postfix', None) or getattr(evaluador, 'ExprPost', None)
+
+                # Check if result and postfix are valid
+                if resultado is None or postfix is None:
+                    return JsonResponse({'status': 'error', 'message': 'Evaluation completed, but result is missing'}, status=500)
+
+                print("Resultado: ", resultado)
+                print("Postfijo: ", postfix)
+
+                return JsonResponse({'status': 'success', 'result': resultado, 'postfijo': postfix}, status=200)
+            else:
+                return JsonResponse({'status': 'error', 'message': 'Error al evaluar la expresion'}, status=400)
 
         except KeyError as e:
             return JsonResponse({'status': 'error', 'message': f'Parametro faltante: {str(e)}'}, status=400)

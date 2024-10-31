@@ -11,7 +11,7 @@ class AnalizadorLexico:
         self.PasoPorEdoAcept = False
         self.InitLexema = -1
         self.FinLexema = -1
-        self.IndiceCracterActual = -1
+        self.IndiceCaracterActual = -1
         self.CaracterActual = ""
         self.Pila = []
         self.AutomataFD = None
@@ -65,7 +65,7 @@ class AnalizadorLexico:
             self.PasoPorEdoAcept = False
             self.InitLexema = -1
             self.FinLexema = -1
-            self.IndiceCracterActual = -1
+            self.IndiceCaracterActual = -1
             self.CaracterActual = ""
             self.Pila = []
         
@@ -78,7 +78,7 @@ class AnalizadorLexico:
         EdoActual.PasoPorEdoAcept = self.PasoPorEdoAcept
         EdoActual.InitLexema = self.InitLexema
         EdoActual.FinLexema = self.FinLexema
-        EdoActual.IndiceCracterActual = self.IndiceCracterActual
+        EdoActual.IndiceCaracterActual = self.IndiceCaracterActual
         EdoActual.CaracterActual = self.CaracterActual
         EdoActual.Pila = list(self.Pila)
         return EdoActual
@@ -91,7 +91,7 @@ class AnalizadorLexico:
         self.PasoPorEdoAcept = e.PasoPorEdoAcept
         self.InitLexema = e.InitLexema
         self.FinLexema = e.FinLexema
-        self.IndiceCracterActual = e.IndiceCracterActual
+        self.IndiceCaracterActual = e.IndiceCaracterActual
         self.CaracterActual = e.CaracterActual
         self.Pila = list(e.Pila)
         return True
@@ -108,7 +108,7 @@ class AnalizadorLexico:
     # def cadenaXanalizar
     def yylex(self) -> int: 
         while True:
-            self.Pila.append(self.IndiceCracterActual)
+            self.Pila.append(self.IndiceCaracterActual)
 
             if self.IndiceCaracterActual >= len(self.CadenaSigma):
                 self.Lexema = ""

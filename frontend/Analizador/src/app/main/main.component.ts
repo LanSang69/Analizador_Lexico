@@ -74,9 +74,7 @@ export class MainComponent implements OnInit {
 
   OnReset(boleano: boolean) {
     if (boleano && this.isBrowser) {
-      for (let i = 0; i < this.automatas.length; i++) {
-        this.eliminateChildren();
-      }
+      this.eliminateChildren();
       
       this.basico_created = false;
       this.selectedComponent = '';
@@ -284,6 +282,8 @@ export class MainComponent implements OnInit {
 
 
   createAnalisis(description:string){
+    console.log("Creating children: ", description);
+    this.eliminateChildren();
     let counter = this.automatas.length;
     if (isPlatformBrowser(this.platformId)) {
       const container = document.getElementById('dinamicContainer');
@@ -292,76 +292,131 @@ export class MainComponent implements OnInit {
         this.renderer.addClass(div, 'grid-item'); 
         this.renderer.setAttribute(div, 'id', `test`);
         const table = this.renderer.createElement('table');
-        const lines = description.split('\n');
-        lines.forEach(line => {
-          let elements = line.split('\t');
-          const th = this.renderer.createElement('th'); //Pendiente to add table
-          const text = this.renderer.createText(line);
-          this.renderer.appendChild(th, text);
-          this.renderer.appendChild(table, th);
-        });
-        this.renderer.appendChild(div,table);
-
-        // Create a checkbox input element
-        const checkbox = this.renderer.createElement('input');
-        this.renderer.setAttribute(checkbox, 'type', 'checkbox');
-        this.renderer.setAttribute(checkbox, 'id', `test`);
-        this.renderer.setStyle(checkbox, 'position', 'absolute');
-        this.renderer.setStyle(checkbox, 'bottom', '10px');
-        this.renderer.setStyle(checkbox, 'right', '10px');
-        this.renderer.setStyle(checkbox, 'cursor', 'pointer');
-
-        checkbox.addEventListener('change', (event: any) => this.onCheckboxChange(event));
         
-        this.renderer.appendChild(div, checkbox);
+        this.renderer.addClass(table, 'table');
+        this.renderer.addClass(table, 'table-bordered');
+        this.renderer.addClass(table, 'table-hover');
+        this.renderer.setStyle(table, 'text-align', 'center');
+
+        const lines = description.split('\n').slice(0, -1);
+        const headerRow = this.renderer.createElement('tr');
+        const lexemaHeader = this.renderer.createElement('th');
+        const tokenHeader = this.renderer.createElement('th');
+
+        // Style header row
+        this.renderer.setStyle(headerRow, 'background-color', '#19173B');
+        this.renderer.setStyle(headerRow, 'color', '#E7E0D5');
+
+        this.renderer.appendChild(lexemaHeader, this.renderer.createText('LEXEMA'));
+        this.renderer.appendChild(tokenHeader, this.renderer.createText('TOKEN'));
+        this.renderer.appendChild(headerRow, lexemaHeader);
+        this.renderer.appendChild(headerRow, tokenHeader);
+        this.renderer.appendChild(table, headerRow);
+
+        lines.forEach(line => {
+            let elements = line.split('\t');
+            const row = this.renderer.createElement('tr');
+            const lexemaCell = this.renderer.createElement('td');
+            const tokenCell = this.renderer.createElement('td');
+            
+            this.renderer.appendChild(lexemaCell, this.renderer.createText(elements[0]));
+            this.renderer.appendChild(tokenCell, this.renderer.createText(elements[1]));
+            this.renderer.appendChild(row, lexemaCell);
+            this.renderer.appendChild(row, tokenCell);
+            this.renderer.appendChild(table, row);
+        });
+        this.renderer.appendChild(div, table);
 
         this.renderer.setStyle(div, 'position', 'relative'); // Ensure the parent div is positioned relatively
         this.renderer.appendChild(container, div); 
-        this.addGridClass();
+        container.classList.remove(
+          'dinamicGrid-1',
+          'dinamicGrid-2',
+          'dinamicGrid-3',
+          'dinamicGrid-4',
+          'dinamicGrid-5',
+          'dinamicGrid-6'
+        );
+        this.renderer.addClass(container, 'dinamicGrid-1');
         
         const gridItems = container.getElementsByClassName('grid-item');
         for (let i = 0; i < gridItems.length; i++) {
-          (gridItems[i] as HTMLElement).style.width = '301px';
-          (gridItems[i] as HTMLElement).style.height = '301px';
+          (gridItems[i] as HTMLElement).style.width = '300px';
+          (gridItems[i] as HTMLElement).style.height = '400px';
         }
+      }
+    }
+  }
 
-        if(counter > 3){
-          const gridItems = container.getElementsByClassName('grid-item');
-          for (let i = 0; i < gridItems.length; i++) {
-            (gridItems[i] as HTMLElement).style.width = '231px';
-            (gridItems[i] as HTMLElement).style.height = '231px';
-          }
-        }
+  createResult(postfijo:string, result:number){
+    console.log("Creating children: ", postfijo, result);
+    this.eliminateChildren();
+    if (isPlatformBrowser(this.platformId)) {
+      const container = document.getElementById('dinamicContainer');
+      if (container) {
+        const div = this.renderer.createElement('div');
+        this.renderer.addClass(div, 'grid-item'); 
+        this.renderer.setAttribute(div, 'id', `test`);
+        
+        const postfijoLabel = this.renderer.createElement('label');
+        this.renderer.addClass(postfijoLabel, 'pt-3');
+        this.renderer.setAttribute(postfijoLabel, 'for', 'postfijoInput');
+        this.renderer.setStyle(postfijoLabel, 'font-weight', 'bold');
+        const postfijoLabelText = this.renderer.createText('Postfijo:');
+        this.renderer.appendChild(postfijoLabel, postfijoLabelText);
 
-        if(counter > 6){
-          const gridItems = container.getElementsByClassName('grid-item');
-          for (let i = 0; i < gridItems.length; i++) {
-            (gridItems[i] as HTMLElement).style.width = '201px';
-            (gridItems[i] as HTMLElement).style.height = '201px';
-          }
-        }
+        const postfijoInput = this.renderer.createElement('input');
+        this.renderer.addClass(postfijoInput, 'pt-3');
+        this.renderer.setAttribute(postfijoInput, 'type', 'text');
+        this.renderer.setAttribute(postfijoInput, 'id', 'postfijoInput');
+        this.renderer.setAttribute(postfijoInput, 'value', postfijo);
+        this.renderer.addClass(postfijoInput, 'form-control');
+        this.renderer.setStyle(postfijoInput, 'margin-bottom', '10px');
+        this.renderer.setAttribute(postfijoInput, 'readonly', 'true');
 
-        if(counter > 9){
-          const gridItems = container.getElementsByClassName('grid-item');
-          for (let i = 0; i < gridItems.length; i++) {
-            (gridItems[i] as HTMLElement).style.width = '181px';
-            (gridItems[i] as HTMLElement).style.height = '181px';
-          }
-        }
+        const resultLabel = this.renderer.createElement('label');
+        this.renderer.setAttribute(resultLabel, 'for', 'resultInput');
+        this.renderer.setStyle(resultLabel, 'font-weight', 'bold');
+        const resultLabelText = this.renderer.createText('Resultado:');
+        this.renderer.appendChild(resultLabel, resultLabelText);
 
-        if(counter > 18){
-          const gridItems = container.getElementsByClassName('grid-item');
-          for (let i = 0; i < gridItems.length; i++) {
-            (gridItems[i] as HTMLElement).style.width = '141px';
-            (gridItems[i] as HTMLElement).style.height = '141px';
-          }
-        }
-        if(counter > 24){
-          const gridItems = container.getElementsByClassName('grid-item');
-          for (let i = 0; i < gridItems.length; i++) {
-            (gridItems[i] as HTMLElement).style.width = '101px';
-            (gridItems[i] as HTMLElement).style.height = '101px';
-          }
+        const resultInput = this.renderer.createElement('input');
+        this.renderer.setAttribute(resultInput, 'type', 'text');
+        this.renderer.setAttribute(resultInput, 'id', 'resultInput');
+        this.renderer.setAttribute(resultInput, 'value', result.toString());
+        this.renderer.addClass(resultInput, 'form-control');
+        this.renderer.setAttribute(resultInput, 'readonly', 'true');
+
+        const centeredDiv = this.renderer.createElement('div');
+        this.renderer.setStyle(centeredDiv, 'display', 'flex');
+        this.renderer.setStyle(centeredDiv, 'flex-direction', 'column');
+        this.renderer.setStyle(centeredDiv, 'align-items', 'center');
+
+
+        this.renderer.appendChild(centeredDiv, postfijoLabel);
+        this.renderer.appendChild(centeredDiv, postfijoInput);
+        this.renderer.appendChild(centeredDiv, resultLabel);
+        this.renderer.appendChild(centeredDiv, resultInput);
+        this.renderer.addClass(postfijoInput, 'container');
+
+        this.renderer.appendChild(div, centeredDiv);
+
+        this.renderer.setStyle(div, 'position', 'relative'); // Ensure the parent div is positioned relatively
+        this.renderer.appendChild(container, div); 
+        container.classList.remove(
+          'dinamicGrid-1',
+          'dinamicGrid-2',
+          'dinamicGrid-3',
+          'dinamicGrid-4',
+          'dinamicGrid-5',
+          'dinamicGrid-6'
+        );
+        this.renderer.addClass(container, 'dinamicGrid-1');
+        
+        const gridItems = container.getElementsByClassName('grid-item');
+        for (let i = 0; i < gridItems.length; i++) {
+          (gridItems[i] as HTMLElement).style.width = '300px';
+          (gridItems[i] as HTMLElement).style.height = '400px';
         }
       }
     }
@@ -574,10 +629,16 @@ downloadFile(content: any) {
 }
 
 getTable(event: any){
-  console.log(event);
-
+  this.createAnalisis(event);
 }
 
-
+calcular(event:any){
+  if(event.success){
+    this.createResult(event.postfijo, event.resultado);
+    this.showSuccess("Cálculo exitoso");
+  }else{
+    this.showError("Error en el cálculo");
+  }
+}
 
 }

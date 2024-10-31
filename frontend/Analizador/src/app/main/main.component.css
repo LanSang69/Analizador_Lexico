@@ -151,3 +151,11 @@ input[type="checkbox"] {
     height: 20px;
     accent-color: white; /* This sets the color of the checkbox */
 }
+
+input{
+    border-radius: 10px;
+    padding: 7px;
+    border: var(--background-main);
+    border-width: 3px;
+    width: 200px;
+}

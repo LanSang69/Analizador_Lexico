@@ -13,4 +13,5 @@ urlpatterns = [
     path('regex_to_afn/', views.RegexToAFN, name='RegexToAFN'),
     path('afn_to_afd/', views.createAFD, name='createAFD'),
     path('analizar/', views.analizar, name='analizar'),
+    path('calculadora/', views.calculadora, name='calculadora'),
 ]

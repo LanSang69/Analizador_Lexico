@@ -14,6 +14,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AutomatasComponent } from './app/main/automatas/automatas.component';
 import { RegexToAFNComponent } from './app/main/regex-to-afn/regex-to-afn.component';
 import { AnalizarComponent } from './app/main/analizar/analizar.component';
+import { CalculadoraComponent } from './app/main/calculadora/calculadora.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { AnalizarComponent } from './app/main/analizar/analizar.component';
     AutomatasComponent,
     RegexToAFNComponent,
     AnalizarComponent,
+    CalculadoraComponent,
   ],
   imports: [
     BrowserModule,
