@@ -246,7 +246,7 @@ export class MainComponent implements OnInit {
           }
         }
 
-        if(counter > 6){
+        if(counter > 5){
           const gridItems = container.getElementsByClassName('grid-item');
           for (let i = 0; i < gridItems.length; i++) {
             (gridItems[i] as HTMLElement).style.width = '201px';
