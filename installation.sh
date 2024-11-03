@@ -110,3 +110,13 @@ else
         exit 1
     fi
 fi
+
+if ! cd frontend/Analizador; then
+    echo "Error al cambiar al directorio frontend/Analizador."
+    exit 1
+fi
+
+if ! npm install; then
+    echo "Error al ejecutar npm install."
+    exit 1
+fi
