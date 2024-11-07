@@ -3,7 +3,9 @@ import traceback
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .logic import AFN, Operations as op, AFD, Analizador as A, simbolosEspeciales as s, EvaluadorExpr as E
+from .logic import AFN, Operations as op, AFD, Analizador as A, simbolosEspeciales as s, EvaluadorExpr as E, regex as R
+import os
+
 afns_ids = []
 afn_saved = []
 descriptions = {}
@@ -249,17 +251,77 @@ def unir_automatas(request):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)      
         
 @csrf_exempt
+def generar_afn(request):
+   if request.method == 'POST':
+        try:
+            global afn_saved
+            global afns_ids
+            global descriptions
+            data = json.loads(request.body)
+            ids_array = data.get('ids')
+
+            afn = next((a for a in afn_saved if a.get_idAFN() == ids_array[0]), None)
+            if not afn:
+                return JsonResponse({'status': 'error', 'message': f'Automata no encontrado: {ids_array[0]}'}, status=404)
+            
+            for i in range(1, len(ids_array)):
+                afnAux = next((a for a in afn_saved if a.get_idAFN() == ids_array[i]), None)
+                if not afnAux:
+                    return JsonResponse({'status': 'error', 'message': f'Automata no encontrado: {ids_array[i]}'}, status=404)
+                afn.FinalAFN(afnAux)
+
+            
+            # Reassign IDs after removing the old ones
+            afn_saved = [a for a in afn_saved if a.get_idAFN() not in ids_array]
+            afns_ids = [a for a in afns_ids if a not in ids_array]
+
+            random_id = op.generate_random_id()
+
+            while random_id in afns_ids:
+                random_id = op.generate_random_id()
+
+            afn.set_idAFN(random_id)
+            afn_saved.append(afn)
+
+            descriptions[afn.get_idAFN()] = op.print_afn_details(afn)
+            afns_ids.append(afn.get_idAFN())
+
+            # Return response with success message
+            return JsonResponse({'status': 'success', 'id': afn.get_idAFN(), 'description' : op.print_afn_details(afn), 'message': f'Automata generado con id: {afn.get_idAFN()}'}, status=200)
+
+        except KeyError as e:
+            return JsonResponse({'status': 'error', 'message': f'Parametro faltante: {str(e)}'}, status=400)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)      
+
+@csrf_exempt
 def RegexToAFN(request):
    if request.method == 'POST':
         try:
 
             data = json.loads(request.body)
             regex = data.get('regex')
-            
+
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            file_path = os.path.join(base_dir, 'AFNtoAFD/logic', 'final3.txt')
+
+            with open(file_path, 'r') as file:
+                table = file.read()
+
+
+            afd = AFD.AFD()
+            afd.leerString(table)
+
+
+            creadorRegex = R.Regex()
+            creadorRegex.initWithTable(regex, afd)
+
             if not regex:
                 return JsonResponse({'status': 'error', 'message': 'Regex parameter missing'}, status=400)
+            
             afn = AFN.AFN()
-            afn = op.expToAFN(regex)
+            creadorRegex.E(afn)
+
 
             global afn_saved
             afn_saved.append(afn)
@@ -353,6 +415,7 @@ def calculadora(request):
             # Initialize AFD and EvaluadorExpr
             afd = AFD.AFD()
             afd.leerString(stringAFD)
+
 
             evaluador = E.EvaluadorExpr()
             evaluador.initWithTable(expresion, afd)

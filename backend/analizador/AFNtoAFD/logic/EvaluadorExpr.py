@@ -78,7 +78,7 @@ class EvaluadorExpr:
             print("operation + or -")
             if self.T(v2, postfijo2):
                 v[0] = v[0] + v2[0] if int(token) == 10 else v[0] - v2[0]
-                postfijo[0] = postfijo[0] + postfijo2[0] + ("+" if int(token) == 10 else "-")
+                postfijo[0] = postfijo[0] + " " + postfijo2[0] + " " + ("+" if int(token) == 10 else "-")
                 if self.Ep(v, postfijo):
                     return True
             return False
@@ -102,7 +102,7 @@ class EvaluadorExpr:
         if int(token) == 30 or int(token) == 40:
             if self.F(v2, postfijo2):
                 v[0] = v[0] * v2[0] if int(token) == 30 else v[0] / v2[0]
-                postfijo[0] = postfijo[0] + postfijo2[0] + ("*" if int(token) == 30 else "/")
+                postfijo[0] = postfijo[0] + " " + postfijo2[0] + " " + ("*" if int(token) == 30 else "/")
                 if self.Tp(v, postfijo):
                     return True
             return False
@@ -119,6 +119,6 @@ class EvaluadorExpr:
             return False
         elif int(token) == 70 or int(token) == 80: #Numero
             v[0] = float(self.Analizador.Lexema)
-            postfijo[0] = postfijo[0] + self.Analizador.Lexema
+            postfijo[0] = postfijo[0] + " " + self.Analizador.Lexema
             return True
         return False

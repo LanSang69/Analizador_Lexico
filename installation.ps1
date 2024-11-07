@@ -39,11 +39,11 @@ Write-Output "pip version: $(pip3 --version)"
 if (Test-Path "analizador_venv") {
     Write-Output "El entorno virtual ya existe."
 } else {
-    python3 -m venv analizador_venv
+    py -m venv analizador_venv
 }
 
 # Activar el entorno virtual
-& .\analizador_venv\Scripts\Activate.ps1
+& .\analizador_venv\Scripts\Activate.bat
 
 # Instalar paquetes de requirements.txt
 if (Test-Path "requirements.txt") {

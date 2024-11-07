@@ -107,6 +107,7 @@ class AnalizadorLexico:
 
     # def cadenaXanalizar
     def yylex(self) -> int: 
+        print("yylex")
         while True:
             self.Pila.append(self.IndiceCaracterActual)
 
@@ -163,6 +164,7 @@ class AnalizadorLexico:
         if len(self.Pila) == 0:
             return False
         self.IndiceCaracterActual = self.Pila.pop()
+        print("IndiceCaracterActual: ", self.IndiceCaracterActual)
         return True
     
     def yytext(self) -> str:

@@ -67,6 +67,7 @@ class AFD:
         self.archivo = resultado
 
     def leerString(self, archivo):
+        print("Leyendo archivo")
         self.setTablaAFD([])
         lines = archivo.strip().split("\n")
 

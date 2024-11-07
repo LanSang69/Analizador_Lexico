@@ -150,6 +150,27 @@ class AFN:
             if a not in self.alphabet:
                 self.alphabet.append(a)
 
+    def FinalAFN(self,afn):
+        e1 = estado.Estado()
+        t1, t2 = transicion.Transicion(), transicion.Transicion()
+
+        t1.init_data(eps, eps, self.edoInicial)
+        t2.init_data(eps, eps, afn.edoInicial)
+
+        e1.transiciones.append(t1)
+        e1.transiciones.append(t2)
+
+        self.set_edoInicial(e1)
+
+        for e in afn.edosAFN:
+            self.edosAFN.append(e)
+
+        self.edosAFN.append(e1)
+        for a in afn.alphabet:
+            if a not in self.alphabet:
+                self.alphabet.append(a)
+
+        
     def Concatenar(self, afn):
         for t in afn.edoInicial.transiciones:
             for e in self.edosAcept:
@@ -222,6 +243,7 @@ class AFN:
         token = 0
         C = []  # Conjunto of Si's
         Q = []  # Cola
+        UsedAcept = []
         EdosAFN = []  # Cola con "renglones"
         counter = 0
         Saux = s.Si()
@@ -268,7 +290,9 @@ class AFN:
                             Raux.Assign(element, C[index].get_id())
 
             if Saux.get_accept():
-                token += 10
+                if op.getIdEdoAcept(Saux) not in UsedAcept:
+                    UsedAcept.append(op.getIdEdoAcept(Saux))
+                    token += 10
                 Raux.setToken(token)
                 
             EdosAFN.append(Raux)

@@ -62,11 +62,6 @@ def expToAFN(exp):
                 aux.crearAFNBasicoChar(postfix[i])
                 pila.append(aux)
 
-        for e in pila:
-            print("_______________________________")
-            print(postfix[i])
-            print_afn_details(e)
-            print("_______________________________")
         i += 1
 
     if len(pila) == 1:
@@ -125,7 +120,7 @@ def Ir_AC(conjunto, simbolo):
 
 def ContieneSj(C, Sj):
     for element in C:
-        if element == Sj:
+        if element.S == Sj.S:
             return True
     return False
 
@@ -136,12 +131,18 @@ def EsAceptacion(Sj):
             return True
     return False
 
+def getIdEdoAcept(Sj):
+    for e in Sj.S:
+        if e.EdoAcept:
+            return hex(id(e))
+    return -1
+
 
 def IndexOfSj(C, Sk):
 
     for index, si in enumerate(C):
 
-        if si.S == Sk.S:
+        if si == Sk:
 
             return index
 

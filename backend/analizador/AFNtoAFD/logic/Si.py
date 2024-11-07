@@ -6,8 +6,7 @@ class Si:
 
     def __eq__(self, other):
         if isinstance(other, Si):
-            return self.S == other.S and self.accept == other.accept
-        return False
+            return self.S == other.S
     
     def init_data(self, id, S):
         self.id = id

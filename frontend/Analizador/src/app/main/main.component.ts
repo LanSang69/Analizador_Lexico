@@ -10,6 +10,7 @@ import { UnirService } from './UnirService';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { AFDService } from './AFDService';
+import { GenerarService } from './GenerarService';
 
 @Component({
   selector: 'app-main',
@@ -31,7 +32,8 @@ export class MainComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private cdRef: ChangeDetectorRef,
-    private afd: AFDService
+    private afd: AFDService,
+    private generar: GenerarService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId); // Check if running in the browser
   }
@@ -137,6 +139,16 @@ export class MainComponent implements OnInit {
         this.getFile(id);
       } else {
         this.showError('Debe seleccionar un autómata para convertirlo');
+      }
+    }else if(component === 'GenerarAFN'){
+      if (this.checkedIds.length > 1) {
+        let ids: number[] = [];
+        this.checkedIds.forEach(element => {
+          ids.push(parseInt(element, 10));
+        });
+        this.gen_automatas(ids);
+      } else {
+        this.showError('Debe seleccionar más un autómata para unirlos');
       }
     }
   }
@@ -555,6 +567,30 @@ unir_automatas(ids:number[]){
       error => {
         this.showError(error.error.message);
     })
+}
+
+
+gen_automatas(ids:number[]){
+  this.generar.generar(ids)
+  .subscribe(response =>{
+      this.eliminateChildren();
+      this.checkedIds = [];
+      this.getAutomatas().then(() => {
+        for (let i = 0; i < this.automatas.length; i++) {
+          this.createChildren(this.automatas[i]);
+        }
+      }).catch(error => {
+        console.error("Error getting automatas:", error);
+      });
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach((checkbox) => {
+        (checkbox as HTMLInputElement).checked = false;
+      });
+      this.showSuccess(response.message);
+    },
+    error => {
+      this.showError(error.error.message);
+  })
 }
 
 showSuccess(mesage: string) {

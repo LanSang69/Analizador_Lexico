@@ -10,6 +10,7 @@ urlpatterns = [
     path('cerradura_k/', views.cerradura_k, name='cerradura_k'),
     path('opcional/', views.opcional, name='opcional'),
     path('unir/', views.unir_automatas, name='unir_automatas'),
+    path('generar/', views.generar_afn, name='generar_afn'),
     path('regex_to_afn/', views.RegexToAFN, name='RegexToAFN'),
     path('afn_to_afd/', views.createAFD, name='createAFD'),
     path('analizar/', views.analizar, name='analizar'),
