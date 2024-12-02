@@ -15,4 +15,5 @@ urlpatterns = [
     path('afn_to_afd/', views.createAFD, name='createAFD'),
     path('analizar/', views.analizar, name='analizar'),
     path('calculadora/', views.calculadora, name='calculadora'),
+    path('eliminate/', views.eliminate, name='eliminate'),
 ]

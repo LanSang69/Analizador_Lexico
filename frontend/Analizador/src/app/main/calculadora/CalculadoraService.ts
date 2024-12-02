@@ -12,11 +12,11 @@ export class CalculadoraService {
 
   constructor(private http: HttpClient, private router:Router) {}
 
-  calculadora(automata:string, expresion:string): Observable<any> {
+  calculadora(expresion:string): Observable<any> {
     const url = `${this.baseUrl}/calculadora/`;  
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    const body = { automata, expresion };
+    const body = { expresion };
 
     return this.http.post(url, body, { headers });
   }

@@ -20,4 +20,13 @@ export class resetService {
 
     return this.http.post(url, body, { headers });
   }
+
+  eliminate(id:string): Observable<any> {
+    const url = `${this.baseUrl}/eliminate/`;  // Django view URL
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    const body = { id };
+
+    return this.http.post(url, body, { headers });
+  }
 }

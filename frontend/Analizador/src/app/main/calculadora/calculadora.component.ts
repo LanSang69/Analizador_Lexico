@@ -11,7 +11,6 @@ import { CalculadoraService } from './CalculadoraService';
 })
 export class CalculadoraComponent {
   expresion: string = '';
-  afd: string = '';
   selectedFile: File | null = null;
   @Output() events = new EventEmitter<{ success: boolean, postfijo: string, resultado: number }>();
 
@@ -22,14 +21,13 @@ export class CalculadoraComponent {
   ) {}
 
   async onSubmit(): Promise<void> {
-    if (!this.selectedFile || !this.expresion) {
-      this.showError('Proporciona una expresión y un archivo.');
+    if (!this.expresion) {
+      this.showError('Proporciona una expresión');
       return;
     }
 
     try {
-      this.afd = await this.txt_to_string(this.selectedFile);
-      this.obtenerResultado(this.expresion, this.afd);
+      this.obtenerResultado(this.expresion);
     } catch (error) {
       this.showError('Failed to read the file.');
       console.error('File reading error:', error);
@@ -53,15 +51,13 @@ export class CalculadoraComponent {
     });
   }
 
-  obtenerResultado(expresion: string, afd: string) {
-    this.calculadora.calculadora(afd, expresion).subscribe(
+  obtenerResultado(expresion: string) {
+    this.calculadora.calculadora(expresion).subscribe(
       data => {
         this.events.emit({ success: true, postfijo: data.postfijo, resultado: data.result });
-        this.showSuccess('Calculation successful!');
       },
       error => {
         this.events.emit({ success: false, postfijo: '', resultado: 0 });
-        this.showError('Calculation failed.');
       }
     );
   }

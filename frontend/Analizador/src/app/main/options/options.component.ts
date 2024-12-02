@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { resetService } from './resetService';
 import { ToastrService } from 'ngx-toastr';
+import { exit } from 'node:process';
 
 @Component({
   selector: 'app-options',
@@ -12,6 +13,9 @@ export class OptionsComponent {
   constructor(private reset:resetService, private toastr:ToastrService){}
   @Output() componentSelected = new EventEmitter<string>();
   @Output() resetAutomatas = new EventEmitter<boolean>();
+  @Output() eliminateE = new EventEmitter<boolean>();
+  @Output() eliminated = new EventEmitter<string>();
+  @Input() selected:string[] = [];
 
   selectComponent(component: string) {
     this.componentSelected.emit(component);
@@ -29,6 +33,26 @@ export class OptionsComponent {
           this.showError(error.error.message);
         }
       );
+  }
+
+  eliminate(){
+    for(let i=0; i<this.selected.length; i++){
+      console.log(this.selected.length);
+
+      this.reset.eliminate(this.selected[i])
+        .subscribe(
+          response => {
+            console.log(response);
+            this.eliminated.emit(response.id);
+          },
+          error => {
+            this.showError(error.error.message);
+            console.error('Error occurred while eliminating automata:', error.error.message);
+          }
+        );
+    }
+    this.showSuccess("Automatas eliminados");
+    this.eliminateE.emit(true);
   }
 
   showSuccess(mesage: string) {

@@ -58,6 +58,31 @@ export class MainComponent implements OnInit {
     }
   }
 
+  automataEliminated(){
+    this.eliminateChildren();
+    this.getAutomatas().then(() => {
+      for (let i = 0; i < this.automatas.length; i++) {
+        this.createChildren(this.automatas[i]);
+      }
+    }).catch(error => {
+      console.error("Error getting automatas:", error);
+    });
+  }
+
+  updateChecked(event:any){
+    event = event.toString();
+    console.log(this.checkedIds);
+    console.log("eliminando", event);
+    if(this.checkedIds.includes(event)){
+      const index = this.checkedIds.indexOf(event);
+      if (index > -1) {
+        this.checkedIds.splice(index, 1);
+      }
+    }else{
+      this.checkedIds.push(event);
+    }
+  }
+
   automatasCreated(id: number){
     this.getAutomatas().then(() => {
       this.createChildren(id);
@@ -594,7 +619,7 @@ gen_automatas(ids:number[]){
 }
 
 showSuccess(mesage: string) {
-  this.toastr.info(mesage);
+  this.toastr.success(mesage);
 }
 
 showError(mesage: string) {

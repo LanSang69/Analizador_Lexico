@@ -23,6 +23,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.btn{
+    margin: 3px;
+}
+
 
 .errors-logo {
     margin-right: 15px;

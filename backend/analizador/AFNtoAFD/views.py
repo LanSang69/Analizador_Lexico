@@ -3,7 +3,7 @@ import traceback
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .logic import AFN, Operations as op, AFD, Analizador as A, simbolosEspeciales as s, EvaluadorExpr as E, regex as R
+from .logic.lexico import AFN, Operations as op, AFD, Analizador as A, simbolosEspeciales as s, EvaluadorExpr as E, regex as R
 import os
 
 afns_ids = []
@@ -407,8 +407,16 @@ def calculadora(request):
             # Parse JSON and retrieve values
             data = json.loads(request.body)
             expresion = data.get('expresion')
-            stringAFD = data.get('automata')
+            expresion = expresion.replace(" ", "")
+    
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            file_path = os.path.join(base_dir, 'AFNtoAFD/', 'expresionesAritmeticas.txt')
 
+            with open(file_path, 'r') as file:
+                stringAFD = file.read()
+
+
+            print(stringAFD)
             if not expresion or not stringAFD:
                 return JsonResponse({'status': 'error', 'message': 'expresion or automata missing'}, status=400)
 
@@ -444,3 +452,29 @@ def calculadora(request):
         except Exception as e:
             error_message = traceback.format_exc()
             return JsonResponse({'status': 'error', 'message': str(e), 'traceback': error_message}, status=500)
+
+@csrf_exempt
+def eliminate(request):
+    if request.method == 'POST':
+        try:
+            print("Eliminando automata")
+            global afn_saved
+            global afns_ids
+            global descriptions
+            data = json.loads(request.body)
+            idAutomata = int(data.get('id'))
+
+            afn = next((a for a in afn_saved if a.get_idAFN() == idAutomata), None)
+            if not afn:
+                return JsonResponse({'status': 'error', 'message': f'Automata no encontrado: {idAutomata}'}, status=404)
+            
+            afn_saved = [a for a in afn_saved if a.get_idAFN() != idAutomata]
+            afns_ids = [a for a in afns_ids if a != idAutomata]
+            del descriptions[idAutomata]
+
+            return JsonResponse({'status': 'success', 'message': f'Automata eliminado: {idAutomata}', 'id': idAutomata}, status=200)
+
+        except KeyError as e:
+            return JsonResponse({'status': 'error', 'message': f'Parametro faltante: {str(e)}'}, status=400)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
