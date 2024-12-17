@@ -1,16 +1,16 @@
 import { Component, OnInit, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { getAutomatasService } from './getAutomatasService';
-import { ConcatenarService } from './ConcatenarService';
+import { getAutomatasService } from './Services/getAutomatasService';
+import { ConcatenarService } from './Services/ConcatenarService';
 import { ToastrService } from 'ngx-toastr';
-import { CerraduraPService } from './CerraduraPService';
-import { CerraduraKService } from './CerraduraKService';
-import { OpcionalService } from './OpcionalService';
-import { UnirService } from './UnirService';
+import { CerraduraPService } from './Services/CerraduraPService';
+import { CerraduraKService } from './Services/CerraduraKService';
+import { OpcionalService } from './Services/OpcionalService';
+import { UnirService } from './Services/UnirService';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
-import { AFDService } from './AFDService';
-import { GenerarService } from './GenerarService';
+import { AFDService } from './Services/AFDService';
+import { GenerarService } from './Services/GenerarService';
 
 @Component({
   selector: 'app-main',
@@ -49,11 +49,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.getAutomatas();
     this.addGridClass();
-    console.log(this.automatas)
-    console.log(this.descriptions)
     for (let i = 0; i < this.automatas.length; i++) {
-      console.log(i)
-      console.log(this.automatas[i])
       this.createChildren(this.automatas[i]);
     }
   }
@@ -71,8 +67,6 @@ export class MainComponent implements OnInit {
 
   updateChecked(event:any){
     event = event.toString();
-    console.log(this.checkedIds);
-    console.log("eliminando", event);
     if(this.checkedIds.includes(event)){
       const index = this.checkedIds.indexOf(event);
       if (index > -1) {
@@ -237,7 +231,6 @@ export class MainComponent implements OnInit {
 
   createChildren(id: number) {
     let counter = this.automatas.length;
-    console.log("Creating children: ", id);
     if (isPlatformBrowser(this.platformId)) {
       const container = document.getElementById('dinamicContainer');
       if (container) {
@@ -319,7 +312,6 @@ export class MainComponent implements OnInit {
 
 
   createAnalisis(description:string){
-    console.log("Creating children: ", description);
     this.eliminateChildren();
     let counter = this.automatas.length;
     if (isPlatformBrowser(this.platformId)) {
@@ -638,8 +630,6 @@ onCheckboxChange(event: any) {
       this.checkedIds.splice(index, 1);
     }
   }
-
-  console.log(event.target.id);
 }
 
 setFalse(event:boolean){

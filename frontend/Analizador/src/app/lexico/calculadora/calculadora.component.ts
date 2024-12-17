@@ -38,7 +38,7 @@ export class CalculadoraComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      console.log('Archivo:', this.selectedFile.name);
+
     }
   }
 

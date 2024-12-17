@@ -1,0 +1,49 @@
+.buttons {
+    position: absolute;
+    top: 1%; 
+    left:50%;
+    transform: translate(-50%, -1%);
+    transition: 0.3s ease-in;
+    z-index: 100;
+    width: fit-content;
+}
+
+.container{
+    z-index: 99;
+}
+
+.invisible{
+    width:100px;
+    background-color: #ffff;
+}
+
+.btn-primary{
+    border-color: #ffff;
+    background-color: #171717ff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    color: #171717ff;
+    background-color: #ffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn{
+    margin: 1px;
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: all 0.3s ease-in-out; 
+    pointer-events: none;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease-in-out;
+    pointer-events: auto;
+}

@@ -28,7 +28,6 @@ export class CrearBasicoComponent {
     this.crear_basico.crearBasico(this.simboloInferior, this.simboloSuperior)
       .subscribe(
         response => {
-          console.log(response);
           this.showSuccess(response.message);
           this.number.emit(response.id);
           this.description.emit(response.description);

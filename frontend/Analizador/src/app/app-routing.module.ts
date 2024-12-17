@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AutomatasComponent } from './main/automatas/automatas.component';
-import { MainComponent } from './main/main.component';
+import { MainComponent } from './lexico/main.component';
 
 const routes: Routes = [
   { path: 'home', component: MainComponent}

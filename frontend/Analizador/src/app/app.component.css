@@ -1,4 +1,10 @@
-/* @import url('node_modules/ngx-toastr/toastr.css'); */
-main{
+:root {
+    --background-color: #212121;
+    --text-color: #efecece7;
+}
+
+#application {
     overflow: hidden;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
