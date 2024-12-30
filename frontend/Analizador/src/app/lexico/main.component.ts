@@ -313,7 +313,6 @@ export class MainComponent implements OnInit {
 
   createAnalisis(description:string){
     this.eliminateChildren();
-    let counter = this.automatas.length;
     if (isPlatformBrowser(this.platformId)) {
       const container = document.getElementById('dinamicContainer');
       if (container) {

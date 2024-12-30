@@ -3,5 +3,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('AFNtoAFD.urls')),
+    path('ll1/', include('LL1.urls')),
     path('admin/', admin.site.urls),
 ]

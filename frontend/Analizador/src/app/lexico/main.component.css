@@ -133,9 +133,9 @@ img{
     text-align: center;
     width: 181px;
     height: 181px;
-    font-size: 20px;
+    font-size: 30px;
     border-radius: 5px;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 

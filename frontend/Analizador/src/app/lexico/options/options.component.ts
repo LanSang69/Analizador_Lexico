@@ -37,7 +37,7 @@ export class OptionsComponent {
 
   eliminate(){
     for(let i=0; i<this.selected.length; i++){
-      console.log(this.selected.length);
+      console.log("numero para eliminar", this.selected.length);
 
       this.reset.eliminate(this.selected[i])
         .subscribe(

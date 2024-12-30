@@ -269,7 +269,6 @@ def generar_afn(request):
                 if not afnAux:
                     return JsonResponse({'status': 'error', 'message': f'Automata no encontrado: {ids_array[i]}'}, status=404)
                 afn.FinalAFN(afnAux)
-
             
             # Reassign IDs after removing the old ones
             afn_saved = [a for a in afn_saved if a.get_idAFN() not in ids_array]
@@ -303,7 +302,7 @@ def RegexToAFN(request):
             regex = data.get('regex')
 
             base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            file_path = os.path.join(base_dir, 'AFNtoAFD/logic', 'final3.txt')
+            file_path = os.path.join(base_dir, 'AFNtoAFD', 'final3.txt')
 
             with open(file_path, 'r') as file:
                 table = file.read()
@@ -463,13 +462,16 @@ def eliminate(request):
             global descriptions
             data = json.loads(request.body)
             idAutomata = int(data.get('id'))
+            print(idAutomata)
 
-            afn = next((a for a in afn_saved if a.get_idAFN() == idAutomata), None)
+            afn = next((a for a in afns_ids if int(a) == idAutomata), None)
             if not afn:
                 return JsonResponse({'status': 'error', 'message': f'Automata no encontrado: {idAutomata}'}, status=404)
             
             afn_saved = [a for a in afn_saved if a.get_idAFN() != idAutomata]
             afns_ids = [a for a in afns_ids if a != idAutomata]
+            print("guardados")
+            print(afns_ids)
             del descriptions[idAutomata]
 
             return JsonResponse({'status': 'success', 'message': f'Automata eliminado: {idAutomata}', 'id': idAutomata}, status=200)

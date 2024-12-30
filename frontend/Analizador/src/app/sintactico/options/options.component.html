@@ -1,0 +1,22 @@
+<div class="errors-container container pt-4 d-flex flex-column">
+    <div class="header-erros d-flex align-items-center">
+      <div class="errors-logo">
+        <img src="../../assets/images/errors.svg.svg" alt="error" class="error-image">
+      </div>
+      <div class="label">
+        <span>Opciones:</span>
+      </div>
+    </div>
+  
+    <div class="text pt-5">
+      <div class="btn-group-vertical">
+        <button type="button" class="btn btn-primary" (click)="selectComponent('gramatica')">Analizar gramática</button>
+        <button type="button" class="btn btn-primary" (click)="selectComponent('cadena')">Analizar cadena</button>
+      </div>
+      <div class="reset">
+        <button type="button" class="btn btn-danger mt-5">Reset</button>
+        <button type="button" class="btn btn-danger mt-5">Eliminar</button>
+      </div>
+    </div>
+  </div>
+  

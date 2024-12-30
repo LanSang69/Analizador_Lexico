@@ -1,0 +1,71 @@
+
+.btn-primary{
+    border-color: #ffff;
+    background-color: #171717ff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    color: #171717ff;
+    background-color: #ffff;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn{
+    margin: 3px;
+}
+
+.hidden{
+    display: none;
+}
+
+table {
+    max-height: 350px;
+    height: 80%;
+    font-size: 11px;
+    overflow-y: scroll;
+}
+
+tr {
+    height: 15px;
+}
+
+.btn-save {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .hideB {
+    transform: translateY(100px);
+  }
+
+.content{
+    margin: 15px;
+    color: #171717ff;
+    background-color: #ffff;
+    overflow-y: scroll;
+    text-align: left;
+    padding: 30px;
+}
+
+#TablLR0{
+    background-color: #212121;
+}
+
+.grid-item {
+    background-color: var(--background-main);
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+    width: 181px;
+    height: 181px;
+    font-size: 20px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.grid-item table{
+    font-size: 15px;
+}

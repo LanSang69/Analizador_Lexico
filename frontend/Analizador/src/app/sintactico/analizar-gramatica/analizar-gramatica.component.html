@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <div class="textarea pt-4 ms-5" style="width:fit-content">
+        <div class="justify-content-left">
+          <h5 style="text-align: left;">Ingresa la gramática a analizar:</h5>
+        </div>
+        <div class="d-flex flex-column">
+          <textarea id="gramatica" class="form-control" rows="10" style="width: 400px; height: 135px;"></textarea>
+          <button class="btn btn-primary" style="left:0;" (click)="EnviarGrammatica()">Analizar</button>
+        </div>
+        <div class="pt-3 d-flex flex-column">
+          <input id="sigma" class="form-control" placeholder="Verificar tokens cadena"/>
+          <button class="btn btn-primary" style="left:0;" (click)="seleccionarS()">Verificar</button>
+        </div>
+        <div class="d-flex justify-content-center" style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 600px;">
+          <div id="dinamicContainer">
+
+          </div>
+        </div>
+      </div>
+      <div class="tablas pt-4 d-flex justify-content-center" style="height:50vh;">
+        <div id="no-terminales" class="no-terminales hidden" style="flex: 0 0 30%;">
+          <div style="width: 90%; height: 100px;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>No Terminales</th>
+                </tr>
+                <tr>
+                  <th>Simbolo</th>
+                </tr>
+              </thead>
+              <tbody id="tableNT">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div  id="terminales" class="terminales hidden" style="flex: 0 0 60%;">
+          <div style="width: 90%; height: 100px;">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+              <th colspan="2">Terminales</th>
+              </tr>
+              <tr>
+              <th>Simbolo</th>
+              <th>Token</th>
+              </tr>
+              </thead>
+              <tbody  id="tableT">
+
+              </tbody>
+            </table>
+            <button class="btn btn-primary btn-save hideB"  id="saveB" (click)="setTokens()">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="TablLR0" class="col-6 hidden">
+      <div class="d-flex flex-column align-items-center" style="font-size: 15px; height: 100%;">
+        <div class="justify-content-left">
+          <h5 style="text-align: left;">Descripción de Estados:</h5>
+        </div>
+        <div id="states" class="content" style="height: 30vh; width:100%;"></div>
+        <div class="justify-content-left">
+          <h5 style="text-align: left;">Tabla LR0:</h5>
+        </div>
+        <div id="tableLR0" class="content pt-1" style="height: 50vh; width:100%;">
+          <table class="table table-bordered">
+            <thead id="tableLR0Head">
+            </thead>
+            <tbody  id="tableLR0Body">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

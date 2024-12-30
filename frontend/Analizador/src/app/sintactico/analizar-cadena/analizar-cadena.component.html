@@ -1,0 +1,36 @@
+<div class="new container pad1 10vh pt-4">
+    <div class="d-flex flex-column align-items-center">
+        <form (ngSubmit)="onSubmit()" autocomplete="off">
+            <div class="d-flex flex-row">
+                <div class="form-group mb-3 me-3">
+                    <input type="text" class="" id="expresion" placeholder="Expresión" [(ngModel)]="sigma" name="expresion">
+                </div>
+                <div class="mb-3 me-3">
+                    <button type="submit" class="crear btn border-white">Calcular</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="text-center">
+        <div class="grid-item">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                <th colspan="3">Análisis de la cadena</th>
+                </tr>
+                <tr>
+                <th>Pila</th>
+                <th>Cadena</th>
+                <th>Destino</th>
+                </tr>
+                </thead>
+                <tbody  id="tableA">
+    
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>

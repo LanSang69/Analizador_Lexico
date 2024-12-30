@@ -1,0 +1,45 @@
+:root {
+    --background-main: #2b2b2b;
+    --hover-button: #FEEE91;
+}
+
+input{
+    border-radius: 10px;
+    padding: 7px;
+    border: var(--background-main);
+    border-width: 3px;
+    width: 200px;
+}
+
+input:hover{
+    border-color: var(--hover-button);
+}
+
+.crear{
+    color: white;
+}
+
+.crear:hover {
+    color: #212121;
+    background-color: var(--hover-button);
+}
+
+.new{
+    background-color: var(--background-main);
+    border-radius: 10px;
+}
+
+.grid-item {
+    background-color: var(--background-main);
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+    height:500px;
+    font-size: 20px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.grid-item table{
+    font-size: 15px;
+}

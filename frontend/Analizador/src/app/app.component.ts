@@ -7,7 +7,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./app.component.css', './lexico/toastr.css']
 })
 export class AppComponent {
-  selectedComponent = "";
+  selectedComponent = "sintactico";
   title = 'Analizador';
   constructor(){}
 
